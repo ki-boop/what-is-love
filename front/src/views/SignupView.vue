@@ -46,32 +46,18 @@ function changeLogin(login: string) {
 function changePassword(password: string) {
   form.password = password.toLocaleLowerCase();
 }
-// let connection = null;
 
-// onMounted(() => {
-//   const ws = new SockJS("http://localhost:8000/ws");
-//   console.log(ws);
-  
-//   let client: Stomp.Client | null = Stomp.over(ws);
-//   console.log(client);
-  
-//   client.connect(() => {
-//     client.subscribe("/echo", (mes: any) => {
-//       console.log(mes);
-//     });
-//   });
-// });
+onMounted(() => {
+  const ws = new SockJS("http://localhost:8000/ws");
 
-// const socket = new WebSocket('wss://localhost:8000')
-//   socket.onopen = () => {
-//     console.log('WebSocket connection established.');
-//     // Perform any necessary actions after the connection is established
-//   };
+  let client: Stomp.Client | null = Stomp.over(ws);
 
-//   socket.onmessage = (event) => {
-//     console.log('Received message from WebSocket server:', event.data);
-//     // Handle incoming messages from the WebSocket server
-//   };
+  client.connect({}, () => {
+    client.subscribe("/echo", (mes: any) => {
+      console.log(mes);
+    });
+  });
+});
 
 </script>
 <style scoped lang="scss">
