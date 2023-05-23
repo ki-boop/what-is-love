@@ -2,48 +2,22 @@
   <header>
     <nav>
       <div class="router">
-        <router-link to="/auth" class="" style="margin-right: 10px;">Auth</router-link>
-        <router-link to="/about">Home</router-link>
+        <!-- <span class="logo">[ mang ]<strong> CHAT</strong></span> -->
       </div>
       <div class="user-info">
-        <router-link to="/support">Write to support</router-link>
-        <div class="user-name">{{ user.name }}</div>
-        <div class="user-role">{{ user.role }}</div>
+        <router-link to="/auth"><span class="pi pi-user" style="font-size: 1.2rem"></span></router-link>
+        <router-link :to="{ name: 'chats', params: { id: 1 } }">
+          <span class="pi pi-comment" style="font-size: 1.2rem"></span
+        ></router-link>
+        <ThemeSwitcher/>
+        
       </div>
     </nav>
-
   </header>
 </template>
 
-<script lang="js">
-import axios from "axios";
-
-export default {
-  data() {
-    return {
-      user:
-          {id: 1, name: 'ivan', role: 'user'}
-
-    };
-  },
-
-  mounted() {
-    this.fetchUsers();
-  },
-
-  methods: {
-    fetchUsers() {
-      axios.get('http://localhost')
-          .then(response => {
-            this.users = response.data;
-          })
-          .catch(error => {
-            console.error(error);
-          });
-    }
-  }
-
-}
+<script lang="ts" setup>
+  import ThemeSwitcher from "../common/shared/ThemeSwitcher.vue"
 </script>
 
 <style lang="scss" scoped>
@@ -62,16 +36,27 @@ nav {
   justify-content: space-between;
   padding: 0 20px;
 }
+.logo {
+  font-weight: bold;
+  letter-spacing: 1px;
+}
 
 a {
   color: #fff;
   font-size: 16px;
 }
+.pi :hover {
+  cursor: pointer;
+}
+.router {
+  display: flex;
+  gap: 30px;
+}
 
 .user-info {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 20px;
 }
 
 .user-info .user-name {
@@ -83,5 +68,4 @@ a {
 
   color: rgba(255, 255, 255, 0.8);
 }
-
 </style>

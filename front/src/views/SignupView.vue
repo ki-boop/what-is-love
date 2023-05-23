@@ -8,26 +8,33 @@
         <InputForm
           v-model="form.login"
           @change="changeLogin($event)"
-          :label="'email'"
-          val=""
+          :label="'Логин'"
         ></InputForm>
         <InputForm
           v-model="form.password"
           @change="changePassword($event)"
-          :label="'password'"
+          :label="'Пароль'"
         ></InputForm>
-        <ButtonForm :label="'Войти'"></ButtonForm>
+        <ButtonForm :label="'Войти'" @clicked="foo()"></ButtonForm>
       </div>
     </div>
   </div>
 </template>
 <script lang="ts" setup>
+import { onMounted } from "vue";
+// @ts-inore
+import SockJS from "sockjs-client";
+import Stomp from "stompjs";
+import { useToast } from "primevue/usetoast";
+const toast = useToast();
+
 export interface ILoginForm {
   login: string;
   password: string;
 }
 import InputForm from "@/components/common/form/InputForm.vue";
 import ButtonForm from "@/components/common/form/ButtonForm.vue";
+import { showCustomNotification } from "@/utils/notification";
 
 const form: ILoginForm = {
   login: "",
@@ -40,6 +47,29 @@ function changeLogin(login: string) {
 
 function changePassword(password: string) {
   form.password = password.toLocaleLowerCase();
+}
+function foo() {
+  toast.add({
+    severity: "success",
+    summary: "Success Message",
+    detail: "Message Content",
+    life: 3000,
+  });
+}
+onMounted(() => {
+  // connectWS();
+});
+
+function connectWS() {
+  const ws = new SockJS("http://localhost:8000/ws");
+
+  let client: Stomp.Client | null = Stomp.over(ws);
+
+  client.connect({}, () => {
+    client.subscribe("/echo", (mes: any) => {
+      console.log(mes);
+    });
+  });
 }
 </script>
 <style scoped lang="scss">
@@ -63,7 +93,7 @@ function changePassword(password: string) {
     margin-top: 20px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 20px;
   }
 }
 </style>

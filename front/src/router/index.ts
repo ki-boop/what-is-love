@@ -1,5 +1,8 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import HomeView from "../views/HomeView.vue";
+import ChatView from "../views/ChatView.vue";
+import SignUpView from "../views/SignupView.vue";
+import { isAuthentivated } from "./middlewares/isAutenficated";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -10,23 +13,23 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: "/about",
     name: "about",
-    component: () => import("../views/AboutView.vue"),
+    component: ChatView,
   },
   {
     path: "/auth",
     name: "auth",
-
-    component: () => import("../views/SignupView.vue"),
-  },
-  {
-    path: "/auth",
-    name: "auth",
-    component: () => import("../views/SignupView.vue"),
+    component: SignUpView,
+    // beforeEnter: isAuthentivated,
   },
   {
     path: "/support",
     name: "support",
     component: () => import("../views/SupportView.vue"),
+  },
+  {
+    path: "/chats",
+    name: "chats",
+    component: () => import("../views/ChatView.vue"),
   },
 ];
 
