@@ -38,6 +38,7 @@ public class ChatController {
     public void echo() throws Exception{
         int i = 0;
         while (true) {
+            System.out.println(i);
             messagingTemplate.convertAndSend("/echo", i++);
             Thread.sleep(2000);
         }
