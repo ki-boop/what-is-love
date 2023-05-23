@@ -17,17 +17,18 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-    private final UserDetailsService userDetailsService;
+//    private final UserDetailsService userDetailsService;
 //    private final AuthEntryPointJwt unauthorizedHandler;
-    private final PasswordEncoder passwordEncoder;
+//    private final PasswordEncoder passwordEncoder;
 
     public WebSecurityConfig(
-            final UserDetailsService userDetailsService,
+//            final UserDetailsService userDetailsService,
 //            final AuthEntryPointJwt unauthorizedHandler,
-            final PasswordEncoder passwordEncoder) {
-        this.userDetailsService = userDetailsService;
+//            final PasswordEncoder passwordEncoder
+    ) {
+//        this.userDetailsService = userDetailsService;
 //        this.unauthorizedHandler = unauthorizedHandler;
-        this.passwordEncoder = passwordEncoder;
+//        this.passwordEncoder = passwordEncoder;
     }
 
 //    @Bean
@@ -35,11 +36,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //        return new AuthTokenFilter();
 //    }
 
-    @Bean
-    @Override
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
-    }
+//    @Bean
+//    @Override
+//    public AuthenticationManager authenticationManagerBean() throws Exception {
+//        return super.authenticationManagerBean();
+//    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -59,8 +60,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //        http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 
-    @Override
-    protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
-    }
+//    @Override
+//    protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
+//        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
+//    }
 }
