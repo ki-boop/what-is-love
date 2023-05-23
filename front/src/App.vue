@@ -10,6 +10,7 @@ import NavHeader from "./components/common/NavHeader.vue";
 </script>
 
 <style lang="scss">
+
 * {
   padding: 0;
   margin: 0;
