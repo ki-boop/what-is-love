@@ -22,7 +22,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { ref, onMounted } from "vue";
+import { onMounted } from "vue";
 // @ts-inore
 import SockJS from "sockjs-client";
 import Stomp from "stompjs";
@@ -58,7 +58,6 @@ onMounted(() => {
     });
   });
 });
-
 </script>
 <style scoped lang="scss">
 .form-wrapper {
