@@ -14,39 +14,5 @@ import org.springframework.web.socket.messaging.SessionConnectedEvent;
 @RestController
 @RequestMapping("/api/chat")
 public class ChatController {
-    private final SimpMessagingTemplate messagingTemplate;
-
-    public ChatController(SimpMessagingTemplate messagingTemplate) {
-        this.messagingTemplate = messagingTemplate;
-    }
-//
-//    @MessageMapping("/chat.sendMessage")
-//    @SendTo("/topic/public")
-//    public ChatMessage sendMessage(@Payload ChatMessage chatMessage) {
-//        return chatMessage;
-//    }
-//
-//    @MessageMapping("/chat.addUser")
-//    @SendTo("/topic/public")
-//    public ChatMessage addUser(@Payload ChatMessage chatMessage,
-//                               SimpMessageHeaderAccessor headerAccessor) {
-//        // Add username in web socket session
-////        headerAccessor.getSessionAttributes().put("username", chatMessage.getSender());
-//        return chatMessage;
-//    }
-
-    @EventListener
-    public void handleWebSocketConnectionListener(final SessionConnectedEvent event){
-        System.out.println("Wow, a new user in the chat");
-    }
-
-    @EventListener(ApplicationReadyEvent.class)
-    public void echo() throws Exception{
-        int i = 0;
-        while (true) {
-            System.out.println(i);
-            messagingTemplate.convertAndSend("/echo", i++);
-            Thread.sleep(2000);
-        }
-    }
+    
 }

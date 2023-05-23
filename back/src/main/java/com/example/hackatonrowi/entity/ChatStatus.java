@@ -1,4 +1,4 @@
-//package com.example.hackatonrowi.entity;
-//
-//public enum ChatStatus {
-//}
+package com.example.hackatonrowi.entity;
+
+public enum ChatStatus {
+}
