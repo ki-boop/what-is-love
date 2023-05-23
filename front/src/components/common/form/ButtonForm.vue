@@ -2,7 +2,6 @@
   <Button
     :label="label"
     iconPos="right"
-    icon="pi pi-check"
     size="small"
     :disabled="disabled"
     :loading="loading"
