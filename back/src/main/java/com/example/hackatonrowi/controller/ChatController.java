@@ -35,10 +35,11 @@ public class ChatController {
 //    }
 
     @EventListener(ApplicationReadyEvent.class)
-    public void echo() {
+    public void echo() throws Exception{
         int i = 0;
         while (true) {
             messagingTemplate.convertAndSend("/echo", i++);
+            Thread.sleep(2000);
         }
     }
 }
