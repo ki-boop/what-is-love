@@ -1,18 +1,38 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+    <h1>List your chats</h1>
+  </div>
+  <div class="chat" v-for="chat in chats" :key="chat.id">
+    <div><strong>Name:</strong> {{ chat.name }}</div>
   </div>
 </template>
 
-<script lang="ts">
-import { Options, Vue } from 'vue-class-component';
-import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
+<script lang="js" >
+import axios from "axios";
 
-@Options({
-  components: {
-    HelloWorld,
+export default {
+  data() {
+    return {
+      chats: [
+        {id: 1, name: 'chat 1'},
+        {id: 3, name: 'chat 2'},
+        {id: 2, name: 'chat 3'},
+      ]
+    };
   },
-})
-export default class HomeView extends Vue {}
+  mounted() {
+    this.fetchChat();
+  },
+  methods: {
+    fetchChat() {
+      axios.get('http://localhost')
+          .then(response => {
+            this.chats = response.data;
+          })
+          .catch(error => {
+            console.error(error);
+          });
+    }
+  }
+}
 </script>
