@@ -22,6 +22,8 @@
   </div>
 </template>
 <script lang="ts" setup>
+import { ref, onMounted } from 'vue'
+import SockJs from 'sockjs-client'
 export interface ILoginForm {
   login: string;
   password: string;
@@ -41,6 +43,18 @@ function changeLogin(login: string) {
 function changePassword(password: string) {
   form.password = password.toLocaleLowerCase();
 }
+let connection = null;
+
+onMounted(() => {
+  console.log(123213);
+  
+  connection = new WebSocket("ws://localhost:8000/ws");
+  connection.onmessage = (event) => {
+    console.log(event);
+  }
+})
+
+
 </script>
 <style scoped lang="scss">
 .form-wrapper {
