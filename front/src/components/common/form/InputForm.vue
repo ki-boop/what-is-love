@@ -2,6 +2,7 @@
   <span class="p-float-label">
     <InputText
       id="input"
+      name="input"
       type="text"
       v-bind="val"
       @update:model-value="changeVal($event)"

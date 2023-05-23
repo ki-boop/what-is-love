@@ -22,8 +22,11 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { ref, onMounted } from 'vue'
-import SockJs from 'sockjs-client'
+import { ref, onMounted } from "vue";
+// @ts-inore
+import SockJS from "sockjs-client";
+import Stomp from "stompjs";
+
 export interface ILoginForm {
   login: string;
   password: string;
@@ -43,17 +46,32 @@ function changeLogin(login: string) {
 function changePassword(password: string) {
   form.password = password.toLocaleLowerCase();
 }
-let connection = null;
+// let connection = null;
 
-onMounted(() => {
-  console.log(123213);
+// onMounted(() => {
+//   const ws = new SockJS("http://localhost:8000/ws");
+//   console.log(ws);
   
-  connection = new WebSocket("ws://localhost:8000/ws");
-  connection.onmessage = (event) => {
-    console.log(event);
-  }
-})
+//   let client: Stomp.Client | null = Stomp.over(ws);
+//   console.log(client);
+  
+//   client.connect(() => {
+//     client.subscribe("/echo", (mes: any) => {
+//       console.log(mes);
+//     });
+//   });
+// });
 
+// const socket = new WebSocket('wss://localhost:8000')
+//   socket.onopen = () => {
+//     console.log('WebSocket connection established.');
+//     // Perform any necessary actions after the connection is established
+//   };
+
+//   socket.onmessage = (event) => {
+//     console.log('Received message from WebSocket server:', event.data);
+//     // Handle incoming messages from the WebSocket server
+//   };
 
 </script>
 <style scoped lang="scss">
