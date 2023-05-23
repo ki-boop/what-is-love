@@ -3,6 +3,7 @@
     <nav>
       <router-link to="/auth">Auth</router-link>
       <router-link to="/about">Home</router-link>
+      <router-link :to="{ name: 'chats', params: { id: 1 } }">Chat</router-link>
     </nav>
   </header>
 </template>

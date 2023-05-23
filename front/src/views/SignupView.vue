@@ -9,7 +9,6 @@
           v-model="form.login"
           @change="changeLogin($event)"
           :label="'email'"
-          val=""
         ></InputForm>
         <InputForm
           v-model="form.password"
@@ -48,6 +47,10 @@ function changePassword(password: string) {
 }
 
 onMounted(() => {
+  connectWS();
+});
+
+function connectWS() {
   const ws = new SockJS("http://localhost:8000/ws");
 
   let client: Stomp.Client | null = Stomp.over(ws);
@@ -57,7 +60,7 @@ onMounted(() => {
       console.log(mes);
     });
   });
-});
+}
 </script>
 <style scoped lang="scss">
 .form-wrapper {

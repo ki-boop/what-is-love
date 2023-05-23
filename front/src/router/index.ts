@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import HomeView from "../views/HomeView.vue";
+import ChatView from "../views/ChatView.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -22,6 +23,11 @@ const routes: Array<RouteRecordRaw> = [
     path: "/auth",
     name: "auth",
     component: () => import("../views/SignupView.vue"),
+  },
+  {
+    path: "/chats",
+    name: "chats",
+    component: () => import("../views/ChatView.vue"),
   },
 ];
 
