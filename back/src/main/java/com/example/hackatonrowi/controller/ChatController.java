@@ -9,6 +9,7 @@ import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.socket.messaging.SessionConnectedEvent;
 
 @RestController
 @RequestMapping("/api/chat")
@@ -34,11 +35,18 @@ public class ChatController {
 //        return chatMessage;
 //    }
 
+    @EventListener
+    public void handleWebSocketConnectionListener(final SessionConnectedEvent event){
+        System.out.println("Wow, a new user in the chat");
+    }
+
     @EventListener(ApplicationReadyEvent.class)
-    public void echo() {
+    public void echo() throws Exception{
         int i = 0;
         while (true) {
+            System.out.println(i);
             messagingTemplate.convertAndSend("/echo", i++);
+            Thread.sleep(2000);
         }
     }
 }
