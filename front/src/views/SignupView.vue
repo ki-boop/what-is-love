@@ -34,9 +34,6 @@ const form: ILoginForm = {
   password: "",
 };
 
-onMounted(() => {
-});
-
 function changeLogin(login: string) {
   form.login = login.toLocaleLowerCase();
 }

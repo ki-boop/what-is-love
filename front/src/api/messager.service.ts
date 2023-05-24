@@ -7,6 +7,9 @@ export class MessageService {
   static initConnection() {
     const ws = new SockJS(WS_SOCKET_CONNECTION);
     const client = Stomp.over(ws);
+    console.log(client);
+    console.log(authStore.getters.getToken);
+
     if (client)
       client.connect(
         { "X-Authorization": "Bearer " + authStore.getters.getToken },
