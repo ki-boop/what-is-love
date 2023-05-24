@@ -3,7 +3,7 @@ import HomeView from "../views/HomeView.vue";
 import ChatView from "../views/ChatView.vue";
 import SignUpView from "../views/SignupView.vue";
 import { isAuthentivated } from "./middlewares/isAutenficated";
-import authStore from "@/store";
+import { isGuest } from "./middlewares/isGuest";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -20,13 +20,7 @@ const routes: Array<RouteRecordRaw> = [
     path: "/auth",
     name: "auth",
     component: SignUpView,
-    redirect: authStore.getters.getToken ? "support" : "",
-    children: [
-      {
-        path: ":id",
-        component: ChatView,
-      },
-    ],
+    beforeEnter: isGuest,
   },
   {
     path: "/support",
@@ -37,6 +31,7 @@ const routes: Array<RouteRecordRaw> = [
     path: "/chats",
     name: "chats",
     component: () => import("../views/ChatView.vue"),
+    beforeEnter: isAuthentivated,
   },
 ];
 

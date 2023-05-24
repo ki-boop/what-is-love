@@ -15,6 +15,7 @@ import "primeicons/primeicons.css";
 import NavHeader from "./components/common/NavHeader.vue";
 import Toast from "primevue/toast";
 import { onMounted } from "vue";
+import authStore from "./store";
 let noActive = false;
 
 
@@ -24,6 +25,11 @@ onMounted(() => {
     if(noActive) return;
     noActive = true;
   })
+
+  authStore.dispatch('setToken')
+
+  console.log(authStore.getters.getTocken);
+  
   
 })
 </script>
@@ -34,8 +40,8 @@ onMounted(() => {
   margin: 0;
   box-sizing: border-box;
   font-size: 16px;
-  --bg-blue: #4365ee;
-  --bg-violet: #d79ec6;
+  --bg-blue: rgb(67, 101, 238);
+  --bg-violet: rgb(215, 158, 198);
   font-family: "Segoe UI", Arial, sans-serif;
 }
 
