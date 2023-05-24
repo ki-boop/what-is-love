@@ -29,6 +29,7 @@ import InputForm from "@/components/common/form/InputForm.vue";
 import ButtonForm from "@/components/common/form/ButtonForm.vue";
 import { AuthService } from "@/api/auth.service";
 import { ILoginForm } from "@/models/auth.model";
+import router from "@/router";
 
 const form: ILoginForm = {
   login: "",
@@ -47,7 +48,9 @@ function logIn() {
 }
 
 function auth() {
-  AuthService.login(form.login, form.password);
+  AuthService.login(form.login, form.password).then(() => {
+    router.push({ name: 'chats' });
+  })
 }
 </script>
 <style scoped lang="scss">
