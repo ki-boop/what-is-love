@@ -1,9 +1,7 @@
 package com.example.hackatonrowi.entity;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 import java.util.List;
@@ -13,7 +11,9 @@ import java.util.UUID;
 @Table(name = "Product")
 @Getter
 @Setter
-@Builder
+@SuperBuilder
+@NoArgsConstructor
+@AllArgsConstructor
 @ToString
 public class Product {
     @Id
@@ -24,4 +24,9 @@ public class Product {
     private String name;
 //    @ManyToMany()
 //    private List<Manager> managers;
+
+
+    public Product(String name) {
+        this.name = name;
+    }
 }
