@@ -35,9 +35,6 @@ public class User {
     @Column(name = "email", unique = true)
     private String email;
 
-    @Column(name = "password")
-    private String password;
-
     @Column(name = "is_active")
     private Boolean isActive;
 
@@ -55,11 +52,10 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
 
-    public User(String firstName, String lastName, String username, String email, String password) {
+    public User(String firstName, String lastName, String username, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
         this.email = email;
-        this.password = password;
     }
 }

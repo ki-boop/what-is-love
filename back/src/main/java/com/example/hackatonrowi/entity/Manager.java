@@ -25,7 +25,7 @@ public class Manager extends User {
     @JoinColumn(name = "product_id")
     private Product product;
 
-    public Manager(String firstName, String lastName, String username, String email, String password) {
-        super(firstName, lastName, username, email, password);
+    public Manager(String firstName, String lastName, String username, String email) {
+        super(firstName, lastName, username, email);
     }
 }

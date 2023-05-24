@@ -48,7 +48,7 @@ public class UserDetailsImpl implements UserDetails {
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
                 .email(user.getEmail())
-                .password(user.getPassword())
+//                .password(user.getPassword())
                 .authorities(user.getRoles()
                         .stream()
                         .map(role -> new SimpleGrantedAuthority(role.getName().name())).collect(Collectors.toList()))

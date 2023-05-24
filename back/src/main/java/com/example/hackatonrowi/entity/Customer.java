@@ -11,8 +11,8 @@ import java.util.List;
 @Getter
 @Setter
 @SuperBuilder
-//@NoArgsConstructor
-@AllArgsConstructor
+@NoArgsConstructor
+//@AllArgsConstructor
 @ToString(callSuper = true)
 public class Customer extends User {
 
@@ -22,7 +22,7 @@ public class Customer extends User {
             orphanRemoval = true)
     private List<Chat> chats;
 
-    public Customer(String firstName, String lastName, String username, String email, String password) {
-        super(firstName, lastName, username, email, password);
+    public Customer(String firstName, String lastName, String username, String email) {
+        super(firstName, lastName, username, email);
     }
 }

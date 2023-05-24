@@ -45,11 +45,11 @@ public class ChatController {
 
         User user = userService.getUserByUsername(authentication.getName());
 ////
-//        Chat chat = chatService.getChat(messageDto.getChatId());
+        Chat chat = chatService.getChat(messageDto.getChatId());
 //
-//        RoleName roleName = authentication.getAuthorities().contains("ROLE_CUSTOMER") ? RoleName.ROLE_CUSTOMER : RoleName.ROLE_MANAGER;
+        RoleName roleName = authentication.getAuthorities().contains("ROLE_CUSTOMER") ? RoleName.ROLE_CUSTOMER : RoleName.ROLE_MANAGER;
 //
-//        ChatMessage chatMessage = chatMessageService.sendMessage(messageDto.getContent(), user, chat, roleName);
+        ChatMessage chatMessage = chatMessageService.sendMessage(messageDto.getContent(), user, chat, roleName);
 //
 //        chatService.sendMessage(messageDto);
 

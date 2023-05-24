@@ -8,7 +8,7 @@ import java.sql.Date;
 import java.util.UUID;
 
 @Entity
-@Table(name = "ChatMessage")
+@Table(name = "Chatmessage")
 @Getter
 @Setter
 @SuperBuilder
@@ -20,7 +20,7 @@ public class ChatMessage {
     @Column(name = "id")
     private UUID id;
 
-    @Column(name = "sentAt")
+    @Column(name = "sent_at")
     private Date sentAt;
 
     @Column(name = "content")
