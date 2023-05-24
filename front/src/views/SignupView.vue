@@ -8,14 +8,14 @@
         <InputForm
           v-model="form.login"
           @change="changeLogin($event)"
-                    :placeholder="'Логин'"
-  type="text"
+          :placeholder="'Логин'"
+          type="text"
         ></InputForm>
         <InputForm
           v-model="form.password"
           @change="changePassword($event)"
-           :placeholder="'Пароль'"
-            :type="'password'"
+          :placeholder="'Пароль'"
+          :type="'password'"
         ></InputForm>
         <ButtonForm :label="'Войти'" @clicked="logIn()"></ButtonForm>
       </div>

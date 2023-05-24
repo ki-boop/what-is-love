@@ -1,13 +1,13 @@
 <template>
   <span class="p-float-label">
     <InputText
-        id="input"
-        v-model="value"
-        :placeholder="placeholder"
-        @update:model-value="changeVal($event)"
-        class="p-inputtext-sm"
-        :type="type"
-      ></InputText>
+      id="input"
+      v-model="value"
+      :placeholder="placeholder"
+      @update:model-value="changeVal($event)"
+      class="p-inputtext-sm"
+      :type="type"
+    ></InputText>
     <label for="input">{{ label || "" }}</label>
   </span>
 </template>
