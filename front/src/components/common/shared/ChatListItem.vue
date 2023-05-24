@@ -1,10 +1,34 @@
 <template>
   <div class="product-wrapper">
-    <div>{{ product?.id }}</div>
+    <div class="chat">
+      <div class="name-product">
+        {{ product?.name }}
+      </div>
+      <div class="phone-product">
+      </div>
+    </div>
+    <div class="question">
+      <img src="@/views/question.png" width="20" height="20" class="image">
+      <button class="text-question"
+              style="color: rgba(255,255,255,0.5); text-decoration:none; border: none; font-size: 12px">
+        Задать вопрос о товаре или оплате
+      </button>
+    </div>
+    <div class="price-phone">
+      <div class="price-product">
+        <div class="number-price"> {{ product?.price }} </div> <div class="well">руб.</div>
+      </div>
+    </div>
+    <div class="button-phone">
+      <button class="text-question"
+              style="color: rgba(255,255,255,0.5); text-decoration: none; border: white; font-size: 20px">
+        Подробнее
+      </button>
+    </div>
   </div>
 </template>
 <script lang="ts" setup>
-import { ChatItemModel } from "@/models/chatItem.model";
+import {ChatItemModel} from "@/models/chatItem.model";
 /* eslint-disable */
 
 defineProps({
@@ -13,7 +37,7 @@ defineProps({
 </script>
 <style lang="scss" scoped>
 .product-wrapper {
-  width: 300px;
+  width: 350px;
   height: 400px;
   background: rgba($color: #f7feff, $alpha: 1);
   border-radius: 10px;
@@ -24,4 +48,81 @@ defineProps({
     cursor: pointer;
   }
 }
+
+.chat {
+  display: flex;
+  padding: 10% 8% 7% 15%;
+}
+
+.name-product {
+  color: white;
+  font-size: 30px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+}
+
+.phone-product {
+  background: rgb(147, 68, 159);
+  width: 75px;
+  height: 75px;
+  border-radius: 10px;
+  margin-left: 87px;
+}
+
+.image {
+  opacity: 0.4;
+  filter: alpha(opacity=40);
+
+}
+
+.text-question {
+  background-color: transparent;
+  border: none;
+  color: #000;
+  text-decoration: underline;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.question{
+  display: flex;
+  align-items: center;
+  margin-left: 7%;
+}
+
+.price-phone{
+  background: rgba(208, 184, 184, 0.5);
+  width: 315px;
+  height: 100px;
+  border-radius: 10px;
+  margin: 5% 5% 5% 5%;
+  display: flex;
+  align-items: center;
+}
+
+.price-product{
+  color: white;
+  display: flex;
+  margin-left: 5%;
+}
+
+.number-price{
+  font-size: 35px;
+  font-weight: 500;
+}
+
+.well{
+  display: flex;
+  align-items: center;
+  margin-top: 15px;
+  margin-left: 5px;
+}
+
+.button-phone{
+  background: rgba(23, 23, 23, 0.01);
+  border-radius: 10px;
+  border: 1px  linear-gradient(50deg, rgba(23,23,23, 0.5),rgba(23,23,23,0.5));
+}
+
 </style>
