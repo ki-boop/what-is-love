@@ -1,9 +1,32 @@
+import { AuthStoreModel } from "@/models/auth.model";
 import { createStore } from "vuex";
 
-export default createStore({
-  state: {},
-  getters: {},
+const authStore = createStore({
+  state: { token: "", refreshToken: "", user: "" },
+  getters: {
+    getToken(state) {
+      return state.token;
+    },
+  },
   mutations: {},
-  actions: {},
+  actions: {
+    setToken({ state }, token: string) {
+      this.state.token = token;
+    },
+    setRefreshToken({ state }, refreshToken: string) {
+      this.state.refreshToken = refreshToken;
+    },
+    removeToken() {
+      this.state.token = "";
+    },
+    removeRefreshToken() {
+      this.state.refreshToken = "";
+    },
+    setUser({ state }, user: string) {
+      this.state.user = user;
+    },
+  },
   modules: {},
 });
+
+export default authStore;

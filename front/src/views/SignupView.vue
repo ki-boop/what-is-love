@@ -9,40 +9,35 @@
           v-model="form.login"
           @change="changeLogin($event)"
           :label="'Логин'"
+          type="text"
         ></InputForm>
         <InputForm
           v-model="form.password"
           @change="changePassword($event)"
+          :type="'password'"
           :label="'Пароль'"
         ></InputForm>
-        <ButtonForm :label="'Войти'" @clicked="foo()"></ButtonForm>
+        <ButtonForm :label="'Войти'" @clicked="logIn()"></ButtonForm>
       </div>
     </div>
   </div>
 </template>
 <script lang="ts" setup>
 import { onMounted } from "vue";
-// @ts-inore
-import SockJS from "sockjs-client";
-import Stomp from "stompjs";
-import { useToast } from "primevue/usetoast";
-import axios from "axios";
-const toast = useToast();
-
-export interface ILoginForm {
-  login: string;
-  password: string;
-}
 import InputForm from "@/components/common/form/InputForm.vue";
 import ButtonForm from "@/components/common/form/ButtonForm.vue";
-import { showCustomNotification } from "@/utils/notification";
-import * as Keycloak from 'keycloak-js'
-
+import { AuthService } from "@/api/auth.service";
+import { ILoginForm } from "@/models/auth.model";
+import { MessageService } from "@/api/messager.service";
 
 const form: ILoginForm = {
   login: "",
   password: "",
 };
+
+onMounted(() => {
+  MessageService.initConnection();
+});
 
 function changeLogin(login: string) {
   form.login = login.toLocaleLowerCase();
@@ -51,50 +46,13 @@ function changeLogin(login: string) {
 function changePassword(password: string) {
   form.password = password.toLocaleLowerCase();
 }
-function foo() {
-  toast.add({
-    severity: "success",
-    summary: "Success Message",
-    detail: "Message Content",
-    life: 3000,
-  });
-}
-onMounted(() => {
-  // connectWS();
+function logIn() {
   auth();
-});
-
+}
 
 function auth() {
- const keycloak = new Keycloak({
-    url: "http://localhost:8080/auth",
-    realm: "Keycloak-react-auth",
-    clientId: "React-auth",
-  });
-
- keycloak.init({ onLoad: 'login-required' }).success((auth: any) => {
-
-    if (!auth) {
-      window.location.reload();
-    } else {
-      console.log('Auth');
-      
-    }
-})
+  AuthService.login(form.login, form.password);
 }
-
-function connectWS() {
-  const ws = new SockJS("http://localhost:8000/ws");
-
-  let client: Stomp.Client | null = Stomp.over(ws);
-
-  client.connect({}, () => {
-    client.subscribe("/echo", (mes: any) => {
-      console.log(mes);
-    });
-  });
-}
-
 </script>
 <style scoped lang="scss">
 .form-wrapper {

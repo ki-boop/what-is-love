@@ -1,17 +1,17 @@
 version: "3.9"
 
 services:
-  back:
-    build:
-      context: ./back
-      dockerfile: Dockerfile
-    ports:
-      - "8000:8000"
-    environment:
-      SPRING_DATASOURCE_USERNAME: ${DB_USERNAME:-postgres}
-      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD:-password}
-    depends_on:
-      - postgres
+  # back:
+  #   build:
+  #     context: ./back
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "8000:8000"
+  #   environment:
+  #     SPRING_DATASOURCE_USERNAME: ${DB_USERNAME:-postgres}
+  #     SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD:-password}
+  #   depends_on:
+  #     - postgres
   postgres:
     container_name: postgres
     image: postgres:latest
