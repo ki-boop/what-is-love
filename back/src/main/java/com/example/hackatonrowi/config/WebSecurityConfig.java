@@ -30,7 +30,9 @@ class WebSecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
+        http.cors().and()
+                .csrf().disable()
+                .authorizeRequests()
                 .anyRequest().permitAll();
         http.oauth2Login();
         http.oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt);
