@@ -28,7 +28,6 @@ import InputForm from "@/components/common/form/InputForm.vue";
 import ButtonForm from "@/components/common/form/ButtonForm.vue";
 import { AuthService } from "@/api/auth.service";
 import { ILoginForm } from "@/models/auth.model";
-import { MessageService } from "@/api/messager.service";
 
 const form: ILoginForm = {
   login: "",
@@ -36,7 +35,6 @@ const form: ILoginForm = {
 };
 
 onMounted(() => {
-  MessageService.initConnection();
 });
 
 function changeLogin(login: string) {
