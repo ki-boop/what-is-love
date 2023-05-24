@@ -16,25 +16,17 @@ import NavHeader from "./components/common/NavHeader.vue";
 import Toast from "primevue/toast";
 import { onMounted } from "vue";
 import authStore from "./store";
-let noActive = false;
-
+import { useTheme } from "./utils/useTheme";
 
 onMounted(() => {
-  setInterval(() => {noActive = false}, 5000)
-  document.querySelector('body')?.addEventListener("mousemove", () => {
-    if(noActive) return;
-    noActive = true;
-  })
+  useTheme();
 
-  authStore.dispatch('setToken')
-
-  console.log(authStore.getters.getTocken);
-  
-  
-})
+  authStore.dispatch("setToken");
+});
 </script>
 
 <style lang="scss">
+@import url(./themes.css);
 * {
   padding: 0;
   margin: 0;
@@ -61,7 +53,6 @@ body {
   }
 
   background: radial-gradient(circle, #375bbb, #050549);
-
 }
 a {
   text-decoration: none;
@@ -88,5 +79,4 @@ a {
 .route-leave-active {
   transition: all 0.3s ease-in;
 }
-
 </style>

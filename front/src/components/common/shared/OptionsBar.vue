@@ -10,7 +10,7 @@
             }
           }
         "
-        ><i :class="option.icon" style="color: white"></i>
+        ><i :class="option.icon" style="color: var(--login-background)"></i>
         <span>{{ option.name }}</span></span
       >
     </li>

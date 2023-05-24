@@ -41,6 +41,22 @@ export class AuthService {
         authStore.dispatch("setToken", response.data.access_token);
 
         return response.data;
+      })
+      .then(() => {
+        this.getUser();
+      });
+  }
+
+  static getUser() {
+    const token = authStore.getters.getToken;
+    return axios
+      .get("http://localhost:8000/api/user/", {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      })
+      .then((res) => {
+        authStore.dispatch("setUser", res);
       });
   }
 }
