@@ -53,6 +53,9 @@ body {
     background: linear-gradient(45deg, var(--bg-blue), #fff);
     border-radius: 10px;
   }
+
+  background: radial-gradient(circle, #375bbb, #050549);
+
 }
 a {
   text-decoration: none;

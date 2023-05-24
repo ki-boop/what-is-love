@@ -37,4 +37,14 @@ const emit = defineEmits(["clicked"]);
   margin-right: 50px;
   margin-left: 50px;
 }
+
+.p-button-sm{
+  margin-right: 30px;
+  margin-left: 30px;
+  margin-bottom: 15px;
+}
+
+.p-button-label{
+  font-size: 25px;
+}
 </style>

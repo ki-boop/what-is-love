@@ -20,8 +20,12 @@ function changeVal(event: string) {
 <style scoped lang="scss">
 .p-inputtext{
   border-radius: 25px;
-  padding-right: 50px;
-  padding-left: 50px;
+  //padding-right: 50px;
+  //padding-left: 50px;
   text-align: center;
+}
+
+.p-inputtext-sm{
+  font-size: 25px;
 }
 </style>
