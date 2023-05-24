@@ -6,9 +6,7 @@
       :placeholder="placeholder"
       @update:model-value="changeVal($event)"
       class="p-inputtext-sm"
-      :type="type"
-    ></InputText>
-    <label for="input">{{ label || "" }}</label>
+      :type="type" ></InputText><label for="input">{{ label || "" }}</label>
   </span>
 </template>
 <script lang="ts" setup>
@@ -29,4 +27,15 @@ function changeVal(event: string) {
 }
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.p-inputtext{
+  border-radius: 25px;
+  //padding-right: 50px;
+  //padding-left: 50px;
+  text-align: center;
+}
+
+.p-inputtext-sm{
+  font-size: 25px;
+}
+</style>

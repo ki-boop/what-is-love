@@ -54,6 +54,7 @@ header {
   position: relative;
   background: linear-gradient(45deg, var(--bg-blue), var(--bg-violet));
   color: #fff;
+  z-index: 2;
 }
 
 span:hover {

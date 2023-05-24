@@ -29,4 +29,22 @@ function click() {
 
 const emit = defineEmits(["clicked"]);
 </script>
-<style></style>
+<style>
+.p-button{
+  border-radius: 25px;
+  border: none;
+  background: linear-gradient( 50deg, rgb(255, 46, 218), rgb(255, 116, 158));
+  margin-right: 50px;
+  margin-left: 50px;
+}
+
+.p-button-sm{
+  margin-right: 30px;
+  margin-left: 30px;
+  margin-bottom: 15px;
+}
+
+.p-button-label{
+  font-size: 25px;
+}
+</style>
