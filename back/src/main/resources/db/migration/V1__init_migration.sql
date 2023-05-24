@@ -1,3 +1,6 @@
+CREATE
+EXTENSION IF NOT EXISTS "uuid-ossp";
+
 drop sequence if exists hibernate_sequence;
 create sequence hibernate_sequence;
 
@@ -29,7 +32,7 @@ drop type if exists "driverStatus";
 create type "driverStatus" as enum ('NOT_ACTIVE', 'LOOKING_FOR_ORDER', 'WAITING', 'ON_THE_WAY');
 
 drop type if exists "roleName";
-create type "roleName" as enum ('ROLE_CUSTOMER', 'ROLE_DRIVER', 'ROLE_ADMIN');
+create type "roleName" as enum ('ROLE_CUSTOMER', 'ROLE_MANAGER');
 
 drop type if exists "paymentMethod";
 create type "paymentMethod" as enum ('CARD', 'CASH');
@@ -37,19 +40,15 @@ create type "paymentMethod" as enum ('CARD', 'CASH');
 drop type if exists "DriverRequestStatus";
 create type "DriverRequestStatus" as enum ('PENDING', 'ACCEPTED', 'REJECTED');
 
-drop table if exists Tariffs;
-create table Tariffs
+drop table if exists Chat;
+create table Chat
 (
-    id              bigint default NEXTVAL('tariffs_seq') not null,
-    rank            bigint                                not null,
-    name            varchar(255)                          not null,
-    min_price       double precision                      not null,
-    minute_price    double precision                      not null,
-    kilometer_price double precision                      not null,
-    waiting_price   double precision                      not null,
-    free_waiting    integer                               not null,
-    commission      double precision                      not null,
-    primary key (id)
+    id          uuid default uuid_generate_v4() not null,
+    customer_id bigint                          not null,
+    manager_id  bigint                          not null,
+    primary key (id),
+    foreign key (customer_id) references Customer,
+    foreign key (manager_id) references Manager
 );
 
 drop table if exists Users;
@@ -65,24 +64,18 @@ create table Users
     primary key (id)
 );
 
-drop table if exists Drivers;
-create table Drivers
+drop table if exists Manager;
+create table Manager
 (
-    id           bigint not null,
-    patronymic   varchar(255),
-    license      varchar(255),
-    rating       double precision default 5,
-    status       "driverStatus"   default 'NOT_ACTIVE',
-    balance      double precision,
-    tariff_id    bigint,
-    geo_position varchar(255),
+    id         bigint not null,
+    product_id bigint not null,
     primary key (id),
     foreign key (id) references Users,
-    foreign key (tariff_id) references Tariffs
+    foreign key (product_id) references Product
 );
 
-drop table if exists Customers;
-create table Customers
+drop table if exists Customer;
+create table Customer
 (
     id bigint not null,
     primary key (id),
@@ -97,83 +90,28 @@ create table Roles
     primary key (id)
 );
 
-drop table if exists User_roles;
-create table User_roles
-(
-    role_id bigint not null,
-    user_id bigint not null,
-    foreign key (role_id) references Roles,
-    foreign key (user_id) references Users
-);
 
-drop table if exists Cars;
-create table Cars
+drop table if exists ChatMessage;
+create table ChatMessage
 (
-    id        bigint default NEXTVAL('cars_seq') not null,
-    name      varchar(255)                       not null,
-    color     varchar(255)                       not null,
-    year      int                                not null,
-    plate     varchar(255)                       not null,
-    driver_id bigint,
+    id        uuid default uuid_generate_v4() not null,
+    sentAt    timestamp                       not null,
+    content   varchar(255)                    not null,
+    sender_id bigint                          not null,
+    chat_id   uuid                            not null,
     primary key (id),
-    foreign key (driver_id) references Drivers
+    foreign key (sender_id) references Users,
+    foreign key (chat_id) references Chat
 );
 
-drop table if exists Orders;
-create table Orders
+drop table if exists Product;
+create table Product
 (
-    id              bigint default NEXTVAL('orders_seq') not null,
-    date            timestamp                            not null,
-    origin          varchar(255)                         not null,
-    destination     varchar(255)                         not null,
-    price           double precision                     not null,
-    waiting_price   double precision,
-    total_price     double precision,
-    commission      double precision,
-    distance        double precision                     not null,
-    duration        double precision                     not null,
-    status          "orderStatus"                        not null,
-    start_wait_time timestamp,
-    stop_wait_time  timestamp,
-    end_time        timestamp,
-    payment_method  "paymentMethod"                      not null,
-    driver_id       bigint,
-    customer_id     bigint,
-    tariff_id       bigint,
-    version         bigint default 0,
-    primary key (id),
-    foreign key (tariff_id) references Tariffs,
-    foreign key (driver_id) references Drivers,
-    foreign key (customer_id) references Customers
-);
-
-drop table if exists DraftOrders;
-create table DraftOrders
-(
-    id             bigint           not null,
-    date           timestamp        not null,
-    origin         varchar(255)     not null,
-    destination    varchar(255)     not null,
-    distance       double precision not null,
-    duration       double precision not null,
-    prices         json             not null,
-    customer_id    bigint           not null,
-    payment_method "paymentMethod"  not null,
-    primary key (id),
-    foreign key (customer_id) references Customers
-);
-
-drop table if exists Driver_requests;
-create table Driver_requests
-(
-    id         bigint default NEXTVAL('driver_req_seq') not null,
-    date       timestamp                                not null,
-    first_name varchar(255)                             not null,
-    last_name  varchar(255)                             not null,
-    email      varchar(255) unique                      not null,
-    license    varchar(255) unique                      not null,
-    status     "DriverRequestStatus"                    not null,
+    id   bigint       not null,
+    name varchar(255) not null,
     primary key (id)
 );
+
+
 
 

@@ -38,6 +38,11 @@ const routes: Array<RouteRecordRaw> = [
     name: "chats",
     component: () => import("../views/ChatView.vue"),
   },
+  {
+    path: "/product",
+    name: "product",
+    component: () => import("../views/ProductView.vue"),
+  },
 ];
 
 const router = createRouter({
