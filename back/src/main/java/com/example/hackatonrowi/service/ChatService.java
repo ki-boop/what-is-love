@@ -1,9 +1,7 @@
 package com.example.hackatonrowi.service;
 
 import com.example.hackatonrowi.dto.SendMessageDto;
-import com.example.hackatonrowi.entity.Chat;
-import com.example.hackatonrowi.entity.ChatMessage;
-import com.example.hackatonrowi.entity.User;
+import com.example.hackatonrowi.entity.*;
 import com.example.hackatonrowi.repository.ChatRepository;
 import org.springframework.stereotype.Service;
 
@@ -19,5 +17,12 @@ public class ChatService {
 
     public Chat getChat(String chatId) {
         return chatRepository.findById(UUID.fromString(chatId)).orElseThrow();
+    }
+
+    public Chat createChat(Product product, Customer customer) {
+        return chatRepository.save(Chat.builder()
+                .customer(customer)
+                .product(product)
+                .build());
     }
 }

@@ -18,6 +18,7 @@ import java.util.UUID;
 public class Chat {
     @Id
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
     @ManyToOne
@@ -25,6 +26,9 @@ public class Chat {
 
     @ManyToOne
     private Manager manager;
+
+    @ManyToOne
+    private Product product;
 
     @OneToMany(
             mappedBy = "chat",
