@@ -1,8 +1,9 @@
-package com.example.hackatonrowi.repositories;
+package com.example.hackatonrowi.repository;
 
 import com.example.hackatonrowi.entity.Chat;
-import com.example.hackatonrowi.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface ChatRepository extends JpaRepository<Chat, Long> {
 }
