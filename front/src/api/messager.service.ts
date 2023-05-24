@@ -14,10 +14,15 @@ export class MessageService {
       client.connect(
         { "X-Authorization": "Bearer " + authStore.getters.getToken },
         () => {
-          client.subscribe("/echo", (mes: any) => {
+          client.subscribe("/user/queue/drivers", (mes: any) => {
             console.log(mes);
           });
+//           client.subscribe("/queue/drivers", (mes: any) => {
+//                       console.log(mes);
+//                     });
+          client.send("/app/chat", {}, JSON.stringify({ chatId: "asd", content: "asd"}))
         }
       );
+
   }
 }

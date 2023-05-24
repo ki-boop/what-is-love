@@ -15,7 +15,7 @@ public class WebsocketTest {
     }
     @EventListener
     public void handleWebSocketConnectionListener(final SessionConnectedEvent event){
-        System.out.println("Wow, docker-postgresql-multiple-databases new user in the chat");
+        System.out.println("Wow, new user in the chat");
     }
 
     @EventListener(ApplicationReadyEvent.class)

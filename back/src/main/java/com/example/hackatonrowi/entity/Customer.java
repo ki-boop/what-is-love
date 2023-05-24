@@ -3,14 +3,11 @@ package com.example.hackatonrowi.entity;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "Customers")
+@Table(name = "Customer")
 @Getter
 @Setter
 @SuperBuilder
@@ -18,6 +15,13 @@ import java.util.List;
 @AllArgsConstructor
 @ToString(callSuper = true)
 public class Customer extends User {
+
+
+    @OneToMany(mappedBy = "customer",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private List<Chat> chats;
+
     public Customer(String firstName, String lastName, String username, String email, String password) {
         super(firstName, lastName, username, email, password);
     }

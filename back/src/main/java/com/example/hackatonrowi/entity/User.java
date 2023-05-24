@@ -4,6 +4,7 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -39,6 +40,13 @@ public class User {
 
     @Column(name = "is_active")
     private Boolean isActive;
+
+    @OneToMany(
+            mappedBy = "sender",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    List<ChatMessage> messages;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
