@@ -4,6 +4,7 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -16,10 +17,20 @@ import java.util.UUID;
 @ToString
 public class Chat {
     @Id
+    @Column(name = "id")
     private UUID id;
 
-    private UUID customer_id;
+    @ManyToOne
+    private Customer customer;
 
-//    private Product product;
+    @ManyToOne
+    private Manager manager;
+
+    @OneToMany(
+            mappedBy = "chat",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<ChatMessage> messages;
 
 }

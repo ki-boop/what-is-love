@@ -83,9 +83,4 @@ a {
   transition: all 0.3s ease-in;
 }
 
-@font-face {
-  font-family: "VTCSuperMarketSaleItalic";
-  src: url("./assets/VTCSuperMarketSaleItalic.ttf") format("ttf");
-  font-weight: 700;
-}
 </style>
