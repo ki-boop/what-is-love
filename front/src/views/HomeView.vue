@@ -1,38 +1,36 @@
 <template>
-  <div class="home">
-    <h1>List your chats</h1>
-  </div>
-  <div class="chat" v-for="chat in chats" :key="chat.id">
-    <div><strong>Name:</strong> {{ chat.name }}</div>
+  <div class="chat-wrapper">
+    <div v-for="chat in chatsActivity" :key="chat.id">
+      <ChatListItem :product="chat"/>
+    </div>
   </div>
 </template>
 
-<script lang="js" >
-import axios from "axios";
+<script lang="ts" setup>
+import { ChatItemModel } from "@/models/chatItem.model";
+import ChatListItem from "../components/common/shared/ChatListItem.vue";
 
-export default {
-  data() {
-    return {
-      chats: [
-        {id: 1, name: 'chat 1'},
-        {id: 3, name: 'chat 2'},
-        {id: 2, name: 'chat 3'},
-      ]
-    };
-  },
-  mounted() {
-    this.fetchChat();
-  },
-  methods: {
-    fetchChat() {
-      axios.get('http://localhost')
-          .then(response => {
-            this.chats = response.data;
-          })
-          .catch(error => {
-            console.error(error);
-          });
-    }
-  }
-}
+const chatsActivity: ChatItemModel[] = [
+  { id: "1", name: "chat 1" },
+  { id: "3", name: "chat 2" },
+  { id: "2", name: "chat 3" },
+  { id: "1", name: "chat 1" },
+  { id: "3", name: "chat 2" },
+  { id: "2", name: "chat 3" },
+];
+const chatsHistory = [
+  { id: "1", name: "chat 1" },
+  { id: "3", name: "chat 2" },
+  { id: "2", name: "chat 3" },
+];
 </script>
+
+<style lang="scss">
+.chat-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 50px;
+  padding: 20px 30px;
+  justify-content: space-evenly;
+}
+</style>

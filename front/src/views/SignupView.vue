@@ -8,14 +8,14 @@
         <InputForm
           v-model="form.login"
           @change="changeLogin($event)"
-          :label="'email'"
+          :label="'Логин'"
         ></InputForm>
         <InputForm
           v-model="form.password"
           @change="changePassword($event)"
-          :label="'password'"
+          :label="'Пароль'"
         ></InputForm>
-        <ButtonForm :label="'Войти'"></ButtonForm>
+        <ButtonForm :label="'Войти'" @clicked="foo()"></ButtonForm>
       </div>
     </div>
   </div>
@@ -25,6 +25,8 @@ import { onMounted } from "vue";
 // @ts-inore
 import SockJS from "sockjs-client";
 import Stomp from "stompjs";
+import { useToast } from "primevue/usetoast";
+const toast = useToast();
 
 export interface ILoginForm {
   login: string;
@@ -32,6 +34,7 @@ export interface ILoginForm {
 }
 import InputForm from "@/components/common/form/InputForm.vue";
 import ButtonForm from "@/components/common/form/ButtonForm.vue";
+import { showCustomNotification } from "@/utils/notification";
 
 const form: ILoginForm = {
   login: "",
@@ -45,9 +48,16 @@ function changeLogin(login: string) {
 function changePassword(password: string) {
   form.password = password.toLocaleLowerCase();
 }
-
+function foo() {
+  toast.add({
+    severity: "success",
+    summary: "Success Message",
+    detail: "Message Content",
+    life: 3000,
+  });
+}
 onMounted(() => {
-  connectWS();
+  // connectWS();
 });
 
 function connectWS() {
@@ -83,7 +93,7 @@ function connectWS() {
     margin-top: 20px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 20px;
   }
 }
 </style>
