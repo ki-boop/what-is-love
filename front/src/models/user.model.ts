@@ -12,6 +12,17 @@ export class ShortUserModel {
   }
 }
 
+export class OptionByRoleItem {
+  name: string;
+  icon: string;
+  action: () => void;
+  constructor(source: any) {
+    this.name = source.name;
+    this.icon = source.icon;
+    this.action = source.action;
+  }
+}
+
 export class UserModel extends ShortUserModel {}
 
 export const image =

@@ -1,4 +1,3 @@
-import { AuthStoreModel } from "@/models/auth.model";
 import { createStore } from "vuex";
 
 const authStore = createStore({
@@ -11,7 +10,7 @@ const authStore = createStore({
   mutations: {},
   actions: {
     setToken({ state }, token: string) {
-      this.state.token = token;
+      this.state.token = localStorage.getItem("access") || "";
     },
     setRefreshToken({ state }, refreshToken: string) {
       this.state.refreshToken = refreshToken;

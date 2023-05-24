@@ -5,19 +5,46 @@
         <!-- <span class="logo">[ mang ]<strong> CHAT</strong></span> -->
       </div>
       <div class="user-info">
-        <router-link to="/auth"><span class="pi pi-user" style="font-size: 1.2rem"></span></router-link>
+        <span
+          class="pi pi-user"
+          style="font-size: 1.2rem"
+          @click="click()"
+        ></span>
         <router-link :to="{ name: 'chats', params: { id: 1 } }">
           <span class="pi pi-comment" style="font-size: 1.2rem"></span
         ></router-link>
-        <ThemeSwitcher/>
-        
+        <ThemeSwitcher />
       </div>
     </nav>
+    <SliderMenu :collapsed="collapsed" v-on-click-outside="toggleSlideMenu" />
   </header>
 </template>
 
 <script lang="ts" setup>
-  import ThemeSwitcher from "../common/shared/ThemeSwitcher.vue"
+import { vOnClickOutside } from "@vueuse/components";
+import authStore from "@/store";
+import ThemeSwitcher from "../common/shared/ThemeSwitcher.vue";
+import router from "@/router";
+import SliderMenu from "../common/shared/SliderMenu.vue";
+import { ref } from "vue";
+const collapsed = ref(false);
+/* eslint-disable */
+function click() {
+  if (authStore.getters.getToken) toogleSlideM();
+  router.push("auth");
+}
+
+
+function toogleSlideM() {
+  if(collapsed.value) return;
+  collapsed.value = !collapsed.value;
+}
+
+function toggleSlideMenu() {
+  collapsed.value = false;
+}
+
+
 </script>
 
 <style lang="scss" scoped>
@@ -28,6 +55,10 @@ header {
   background: linear-gradient(45deg, var(--bg-blue), var(--bg-violet));
   color: #fff;
   z-index: 2;
+}
+
+span:hover {
+  cursor: pointer;
 }
 
 nav {

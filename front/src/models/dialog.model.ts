@@ -11,3 +11,19 @@ export class ShortDialog {
     this.lastMessage = source.lastMessage;
   }
 }
+
+export class ChatMessage {
+  id: string;
+  sentAt: string;
+  content: string;
+  sender_id: number;
+  chat_id: number;
+
+  constructor(source: any) {
+    this.id = source.id;
+    this.sender_id = source.sender_id;
+    this.sentAt = source.sentAt;
+    this.content = source.content;
+    this.chat_id = source.chat_id;
+  }
+}
