@@ -5,8 +5,7 @@ services:
     build:
       context: ./back
       dockerfile: Dockerfile
-    image: sp2022w-backend
-    ports :
+    ports:
       - "8000:8000"
     environment:
       SPRING_DATASOURCE_USERNAME: ${DB_USERNAME:-postgres}
@@ -20,23 +19,51 @@ services:
       POSTGRES_DB: "chatdb"
       POSTGRES_USER: ${DB_USERNAME:-postgres}
       POSTGRES_PASSWORD: ${DB_PASSWORD:-password}
-    volumes:
-      - ${DB_DATA_PATH:-./pgdata}:/var/lib/postgresql/data
+    #    volumes:
+    #      - ${DB_DATA_PATH:-./pgdata}:/var/lib/postgresql/data
     ports:
       - "5432:5432"
 
+#  keycloak:
+#    image: quay.io/keycloak/keycloak:18.0
+#    environment:
+#      DB_VENDOR: POSTGRES
+#      DB_ADDR: postgres
+#      DB_DATABASE: chatdb
+#      DB_USER: postgres
+#      DB_SCHEMA: public
+#      DB_PASSWORD: password
+#      KEYCLOAK_USER: admin
+#      KEYCLOAK_PASSWORD: admin
+#    ports:
+#      - "8080:8080"
+#    depends_on:
+#      - postgres
+#    command:
+#      - start-dev
+#      - --import-realm
+#    volumes:
+#      - ./docker/auth/realm.json:/opt/keycloak/data/import/realm.json
+
   keycloak:
-    image: quay.io/keycloak/keycloak:legacy
+    image: quay.io/keycloak/keycloak:20.0.2
+    container_name: keycloak
+    command:
+      - start --auto-build --db postgres --hostname-strict-https false --hostname-strict false --proxy edge --http-enabled true --import-realm --spi-user-profile-legacy-user-profile-read-only-attributes *_RES_ACCESS_MODE
     environment:
-      DB_VENDOR: POSTGRES
-      DB_ADDR: postgres
-      DB_DATABASE: chatdb
-      DB_USER: postgres
-      DB_SCHEMA: public
-      DB_PASSWORD: password
-      KEYCLOAK_USER: admin
-      KEYCLOAK_PASSWORD: admin
+      KC_DB_URL: jdbc:postgresql://postgres:5432/chatdb
+      KC_DB_USERNAME: postgres
+      KC_DB_PASSWORD: password
+      KC_DB_SCHEMA: public
+      KC_FEATURES: preview
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    volumes:
+      - type: bind
+        source: ./keycloak/realm-export.json
+        target: /opt/keycloak/data/import/realm-export.json
+        read_only: true
     ports:
-      - "8080:8080"
+      - "8282:8080"
     depends_on:
       - postgres
