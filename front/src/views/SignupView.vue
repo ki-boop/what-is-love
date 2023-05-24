@@ -26,6 +26,7 @@ import { onMounted } from "vue";
 import SockJS from "sockjs-client";
 import Stomp from "stompjs";
 import { useToast } from "primevue/usetoast";
+import axios from "axios";
 const toast = useToast();
 
 export interface ILoginForm {
@@ -35,6 +36,8 @@ export interface ILoginForm {
 import InputForm from "@/components/common/form/InputForm.vue";
 import ButtonForm from "@/components/common/form/ButtonForm.vue";
 import { showCustomNotification } from "@/utils/notification";
+import * as Keycloak from 'keycloak-js'
+
 
 const form: ILoginForm = {
   login: "",
@@ -58,7 +61,27 @@ function foo() {
 }
 onMounted(() => {
   // connectWS();
+  auth();
 });
+
+
+function auth() {
+ const keycloak = new Keycloak({
+    url: "http://localhost:8080/auth",
+    realm: "Keycloak-react-auth",
+    clientId: "React-auth",
+  });
+
+ keycloak.init({ onLoad: 'login-required' }).success((auth: any) => {
+
+    if (!auth) {
+      window.location.reload();
+    } else {
+      console.log('Auth');
+      
+    }
+})
+}
 
 function connectWS() {
   const ws = new SockJS("http://localhost:8000/ws");
@@ -71,6 +94,7 @@ function connectWS() {
     });
   });
 }
+
 </script>
 <style scoped lang="scss">
 .form-wrapper {
