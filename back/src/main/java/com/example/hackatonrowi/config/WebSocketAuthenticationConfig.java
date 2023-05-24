@@ -20,6 +20,7 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtAut
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
 
+import java.security.Principal;
 import java.util.List;
 
 @Configuration
@@ -32,21 +33,25 @@ public class WebSocketAuthenticationConfig implements WebSocketMessageBrokerConf
     @Autowired
     private JwtDecoder jwtDecoder;
 
+    @Autowired
+    private JwtAuthenticationConverter jwtAuthenticationConverter;
+
     @Override
     public void configureClientInboundChannel(ChannelRegistration registration) {
         registration.interceptors(new ChannelInterceptor() {
             @Override
             public Message<?> preSend(Message<?> message, MessageChannel channel) {
+                System.out.println("asddasdas");
                 StompHeaderAccessor accessor =
                         MessageHeaderAccessor.getAccessor(message, StompHeaderAccessor.class);
                 if (StompCommand.CONNECT.equals(accessor.getCommand())) {
                     List<String> authorization = accessor.getNativeHeader("X-Authorization");
-                    logger.debug("X-Authorization: {}", authorization);
+                    System.out.println(authorization);
 
                     String accessToken = authorization.get(0).split(" ")[1];
                     Jwt jwt = jwtDecoder.decode(accessToken);
-                    JwtAuthenticationConverter converter = new JwtAuthenticationConverter();
-                    Authentication authentication = converter.convert(jwt);
+//                    JwtAuthenticationConverter converter = new JwtAuthenticationConverter();
+                    Authentication authentication = jwtAuthenticationConverter.convert(jwt);
                     accessor.setUser(authentication);
                 }
                 return message;

@@ -4,6 +4,7 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -34,11 +35,15 @@ public class User {
     @Column(name = "email", unique = true)
     private String email;
 
-    @Column(name = "password")
-    private String password;
-
     @Column(name = "is_active")
     private Boolean isActive;
+
+    @OneToMany(
+            mappedBy = "sender",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    List<ChatMessage> messages;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -47,11 +52,10 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
 
-    public User(String firstName, String lastName, String username, String email, String password) {
+    public User(String firstName, String lastName, String username, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
         this.email = email;
-        this.password = password;
     }
 }

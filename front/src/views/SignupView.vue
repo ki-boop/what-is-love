@@ -23,6 +23,7 @@
   </div>
 </template>
 <script lang="ts" setup>
+ /* eslint-disable */
 import { onMounted } from "vue";
 import InputForm from "@/components/common/form/InputForm.vue";
 import ButtonForm from "@/components/common/form/ButtonForm.vue";

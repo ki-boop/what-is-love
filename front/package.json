@@ -10,6 +10,7 @@
   "dependencies": {
     "@asigloo/vue-dynamic-forms": "^3.18.1",
     "@stomp/stompjs": "^7.0.0",
+    "@vue/cli": "^5.0.8",
     "@vueuse/components": "^10.1.2",
     "@vueuse/core": "^10.1.2",
     "axios": "^1.4.0",

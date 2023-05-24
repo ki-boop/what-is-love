@@ -33,6 +33,11 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import("../views/ChatView.vue"),
     beforeEnter: isAuthentivated,
   },
+  {
+    path: "/product",
+    name: "product",
+    component: () => import("../views/ProductView.vue"),
+  },
 ];
 
 const router = createRouter({

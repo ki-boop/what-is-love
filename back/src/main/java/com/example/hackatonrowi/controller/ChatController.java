@@ -1,40 +1,58 @@
-//package com.example.hackatonrowi.controller;
+package com.example.hackatonrowi.controller;
+
+import com.example.hackatonrowi.dto.SendMessageDto;
+import com.example.hackatonrowi.entity.Chat;
+import com.example.hackatonrowi.entity.ChatMessage;
+import com.example.hackatonrowi.entity.RoleName;
+import com.example.hackatonrowi.entity.User;
+import com.example.hackatonrowi.service.ChatMessageService;
+import com.example.hackatonrowi.service.ChatService;
+import com.example.hackatonrowi.service.UserService;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/api/chat")
+public class ChatController {
+    private final UserService userService;
+    private final SimpMessagingTemplate messagingTemplate;
+    private final ChatMessageService chatMessageService;
+    private final ChatService chatService;
+
+    public ChatController(UserService userService,
+                          SimpMessagingTemplate messagingTemplate,
+                          ChatMessageService chatMessageService,
+                          ChatService chatService) {
+        this.userService = userService;
+        this.messagingTemplate = messagingTemplate;
+        this.chatMessageService = chatMessageService;
+        this.chatService = chatService;
+    }
+
+    @MessageMapping("/chat")
+    public void processMessage(@Payload SendMessageDto messageDto) {
+        System.out.println(messageDto);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Jwt jwt = (Jwt) authentication.getPrincipal();
+
+        messagingTemplate.convertAndSendToUser(authentication.getName(), "/queue/drivers", "Сообщение отправлено");
+
+        User user = userService.getUserByUsername(authentication.getName());
+////
+        Chat chat = chatService.getChat(messageDto.getChatId());
 //
-//import com.example.hackatonrowi.service.ChatMessageService;
-//import com.example.hackatonrowi.service.ChatRoomService;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.boot.context.event.ApplicationReadyEvent;
-//import org.springframework.context.event.EventListener;
-//import org.springframework.messaging.handler.annotation.MessageMapping;
-//import org.springframework.messaging.handler.annotation.Payload;
-//import org.springframework.messaging.handler.annotation.SendTo;
-//import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
-//import org.springframework.messaging.simp.SimpMessagingTemplate;
-//import org.springframework.web.bind.annotation.RequestMapping;
-//import org.springframework.web.bind.annotation.RestController;
-//import org.springframework.web.socket.messaging.SessionConnectedEvent;
+        RoleName roleName = authentication.getAuthorities().contains("ROLE_CUSTOMER") ? RoleName.ROLE_CUSTOMER : RoleName.ROLE_MANAGER;
 //
-//@RestController
-//@RequestMapping("/api/chat")
-//public class ChatController {
-//    @Autowired
-//    private SimpMessagingTemplate messagingTemplate;
-//    @Autowired private ChatMessageService chatMessageService;
-//    @Autowired private ChatRoomService chatRoomService;
+        ChatMessage chatMessage = chatMessageService.sendMessage(messageDto.getContent(), user, chat, roleName);
 //
-//    @MessageMapping("/chat")
-//    public void processMessage(@Payload ChatMessage chatMessage) {
-//        var chatId = chatRoomService
-//                .getChatId(chatMessage.getSenderId(), chatMessage.getRecipientId(), true);
-//        chatMessage.setChatId(chatId.get());
-//
-//        ChatMessage saved = chatMessageService.save(chatMessage);
-//
-//        messagingTemplate.convertAndSendToUser(
-//                chatMessage.getRecipientId(),"/queue/messages",
-//                new ChatNotification(
-//                        saved.getId(),
-//                        saved.getSenderId(),
-//                        saved.getSenderName()));
-//    }
-//}
+//        chatService.sendMessage(messageDto);
+
+        return;
+    }
+}
