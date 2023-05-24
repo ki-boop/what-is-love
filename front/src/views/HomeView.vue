@@ -8,7 +8,7 @@
 
 <script lang="ts" setup>
 import { ChatItemModel } from "@/models/chatItem.model";
-import ChatListItem from "../components/common/shared/ChatListItem.vue";
+import  ChatListItem  from "../components/common/shared/ChatListItem.vue";
 
 const chatsActivity: ChatItemModel[] = [
   { id: "1", name: "chat 1" },
@@ -25,7 +25,7 @@ const chatsHistory = [
 ];
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .chat-wrapper {
   display: flex;
   flex-wrap: wrap;

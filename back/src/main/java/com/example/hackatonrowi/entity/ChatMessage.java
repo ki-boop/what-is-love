@@ -1,9 +1,7 @@
 package com.example.hackatonrowi.entity;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,15 +11,20 @@ import java.sql.Date;
 import java.util.UUID;
 
 @Entity
-@Table(name = "Chat")
+@Table(name = "Message")
 @Getter
 @Setter
-@Builder
+@SuperBuilder
+@NoArgsConstructor
+@AllArgsConstructor
 @ToString
 public class ChatMessage {
     @Id
     @Column(name = "id")
     private UUID id;
+
+    @Column(name = "chat_id")
+    private UUID chat_id;
 
     @Column(name = "sender_id")
     private UUID sender_id;

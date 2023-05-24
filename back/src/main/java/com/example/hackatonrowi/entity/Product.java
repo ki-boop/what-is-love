@@ -1,27 +1,24 @@
 package com.example.hackatonrowi.entity;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
-import java.util.List;
-import java.util.UUID;
 
 @Entity
-@Table(name = "Product")
+@Table(name = "Tariffs")
 @Getter
 @Setter
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @ToString
 public class Product {
     @Id
     @Column(name = "id")
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_generator")
+    @SequenceGenerator(name="product_generator", sequenceName = "product_seq", allocationSize = 1)
+    private Long id;
 
-    @Column(name = "name")
+    @Column(name = "name", unique = true)
     private String name;
-//    @ManyToMany()
-//    private List<Manager> managers;
 }

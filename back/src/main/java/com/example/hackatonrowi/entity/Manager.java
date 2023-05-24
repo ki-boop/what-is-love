@@ -1,25 +1,24 @@
 package com.example.hackatonrowi.entity;
 
-
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
-import java.util.UUID;
+import java.util.List;
 
 @Entity
-@Table(name = "Manager")
+@Table(name = "Drivers")
 @Getter
 @Setter
-@Builder
-@ToString
-public class Manager {
-    @Id
-    private UUID id;
-
-//    @Column(name = "product")
-//    @ManyToMany()
-//    private Product product;
+@SuperBuilder
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString(callSuper = true)
+public class Manager extends User {
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
+    public Manager(String firstName, String lastName, String username, String email, String password) {
+        super(firstName, lastName, username, email, password);
+    }
 }

@@ -1,12 +1,13 @@
 <template>
   <span class="p-float-label">
     <InputText
-      id="input"
-      v-model="value"
-      @update:model-value="changeVal($event)"
-      class="p-inputtext-sm"
-      :type="type"
-    ></InputText>
+        id="input"
+        v-model="value"
+        :placeholder="placeholder"
+        @update:model-value="changeVal($event)"
+        class="p-inputtext-sm"
+        :type="type"
+      ></InputText>
     <label for="input">{{ label || "" }}</label>
   </span>
 </template>
@@ -16,8 +17,9 @@ import InputText from "primevue/inputtext";
 import { ref } from "vue";
 const props = defineProps({
   val: String,
-  label: String,
   type: String,
+  placeholder: String,
+  label: String,
 });
 const value = ref(props.val);
 const emit = defineEmits(["change"]);

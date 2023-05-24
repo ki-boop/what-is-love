@@ -14,6 +14,18 @@ import "primevue/resources/themes/lara-light-indigo/theme.css";
 import "primeicons/primeicons.css";
 import NavHeader from "./components/common/NavHeader.vue";
 import Toast from "primevue/toast";
+import { onMounted } from "vue";
+let noActive = false;
+
+
+onMounted(() => {
+  setInterval(() => {noActive = false}, 5000)
+  document.querySelector('body')?.addEventListener("mousemove", () => {
+    if(noActive) return;
+    noActive = true;
+  })
+  
+})
 </script>
 
 <style lang="scss">
