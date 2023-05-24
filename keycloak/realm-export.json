@@ -681,7 +681,7 @@
       "clientAuthenticatorType": "client-secret",
       "redirectUris": [
         "",
-        "https://localhost:8000/"
+        "http://localhost:8000/"
       ],
       "webOrigins": [],
       "notBefore": 0,
