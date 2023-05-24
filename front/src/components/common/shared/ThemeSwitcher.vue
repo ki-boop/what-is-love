@@ -1,7 +1,18 @@
 <template>
-  <input id="toggle" class="toggle" type="checkbox" />
+  <input id="toggle" class="toggle" type="checkbox" @click="changeTheme()" />
   <div class="background"></div>
 </template>
+
+<script setup lang="ts">
+let theme = localStorage.getItem("app-theme") || "light";
+function changeTheme() {
+  if (theme === "light") theme = "dark";
+  else theme = "light";
+  document.documentElement.setAttribute("data-theme", theme);
+  localStorage.setItem("app-theme", theme);
+}
+</script>
+
 <style lang="scss" scoped>
 .toggle {
   --size: 1.4rem;

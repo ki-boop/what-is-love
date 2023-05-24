@@ -7,7 +7,6 @@
     </div>
     <div class="sub-info">
       <span class="time">00:01</span>
-
     </div>
   </div>
 </template>
@@ -22,7 +21,7 @@ defineProps({
 
 .dialog {
   width: 100%;
-  height: 60px;
+  height: 100px;
   border-bottom: 1px solid black;
   display: flex;
   align-items: center;
@@ -35,8 +34,8 @@ defineProps({
   align-items: flex-start;
 }
 img {
-  width: 40px;
-  height: 40px;
+  width: 70px;
+  height: 70px;
   border-radius: 50%;
 }
 .msg , .time{

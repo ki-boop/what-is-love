@@ -48,7 +48,7 @@ function logIn() {
 }
 
 function auth() {
-  AuthService.login(form.login, form.password).then(() => {
+  AuthService.login(form.login, form.password).finally(() => {
     router.push({ name: 'chats' });
   })
 }
