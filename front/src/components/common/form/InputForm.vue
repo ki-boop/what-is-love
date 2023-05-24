@@ -1,5 +1,5 @@
 <template>
-    <InputText id="input" v-model="value" class="p-inputtext-sm" :placeholder="placeholder"></InputText>
+    <InputText id="input" v-model="value" class="p-inputtext-sm" :placeholder="placeholder" ></InputText>
 </template>
 <script lang="ts" setup>
 /* eslint-disable */
@@ -17,4 +17,15 @@ function changeVal(event: string) {
 }
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.p-inputtext{
+  border-radius: 25px;
+  //padding-right: 50px;
+  //padding-left: 50px;
+  text-align: center;
+}
+
+.p-inputtext-sm{
+  font-size: 25px;
+}
+</style>
