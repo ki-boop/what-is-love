@@ -1,3 +1,5 @@
+
+
 {
   "id": "fcfb1d37-99b7-40bf-9d3e-00f4ff6d661b",
   "realm": "chat_realm",
@@ -681,9 +683,14 @@
       "clientAuthenticatorType": "client-secret",
       "redirectUris": [
         "",
-        "https://localhost:8000/"
+        "http://localhost:8081/*",
+        "http://localhost:8000/*",
+        "http://localhost:8081/"
       ],
-      "webOrigins": [],
+      "webOrigins": [
+        "http://localhost:8081/*",
+        "*"
+      ],
       "notBefore": 0,
       "bearerOnly": false,
       "consentRequired": false,
