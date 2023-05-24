@@ -1,8 +1,5 @@
 <template>
-  <span class="p-float-label">
-    <InputText id="input" v-model="value" class="p-inputtext-sm"></InputText>
-    <label for="input">{{ label || "" }}</label>
-  </span>
+    <InputText id="input" v-model="value" class="p-inputtext-sm" :placeholder="placeholder"></InputText>
 </template>
 <script lang="ts" setup>
 /* eslint-disable */
@@ -10,7 +7,7 @@ import InputText from "primevue/inputtext";
 import { ref } from "vue";
 const props = defineProps({
   val: String,
-  label: String,
+  placeholder: String,
 });
 const value = ref(props.val);
 const emit = defineEmits(["change"]);
