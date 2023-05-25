@@ -40,10 +40,10 @@ public class ChatController {
         this.productService = productService;
     }
 
-    @PostMapping("/")
-    public ChatDto createChat(@RequestParam Long productId) {
+    @PostMapping("/create")
+    public ChatDto createChat(@RequestParam(required = false) Long productId) {
         Customer customer = customerService.getCustomerByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
-        Product product = productService.getProductById(productId);
+        Product product = productService.getProductById(productId).orElse(null);
         return ChatDto.map(chatService.createChat(product, customer));
     }
 

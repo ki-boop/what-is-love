@@ -10,5 +10,5 @@ import java.util.UUID;
 
 @Repository
 public interface ChatRepository extends JpaRepository<Chat, UUID> {
-//    List<Chat> findAllByProductAndManagerIdOnIsNull(Product product);
+    List<Chat> findAllByProductAndManagerIdIsNull(Product product);
 }

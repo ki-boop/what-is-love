@@ -5,6 +5,8 @@ import com.example.hackatonrowi.entity.Product;
 import com.example.hackatonrowi.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class ProductService {
     private final ProductRepository productRepository;
@@ -13,7 +15,7 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    public Product getProductById(Long id) {
-        return productRepository.findById(id).orElseThrow();
+    public Optional<Product> getProductById(Long id) {
+        return productRepository.findById(id);
     }
 }
