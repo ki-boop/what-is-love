@@ -41,10 +41,10 @@ export class AuthService {
         authStore.dispatch("setToken", response.data.access_token);
 
         return response.data;
+      })
+      .then(() => {
+        this.getUser();
       });
-    // .then(() => {
-    //   this.getUser();
-    // });
   }
 
   static getUser() {
@@ -52,10 +52,12 @@ export class AuthService {
     return axios
       .get("http://localhost:8000/api/user/", {
         headers: {
-          Authorization: "Bearer " + token,
+          Authorization: "Bearer " + JSON.parse(token),
         },
       })
       .then((res) => {
+        console.log(res);
+
         authStore.dispatch("setUser", res);
       });
   }
