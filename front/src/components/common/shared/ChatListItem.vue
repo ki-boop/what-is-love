@@ -1,6 +1,10 @@
 <template>
   <div class="product-wrapper">
+
     <div class="chat">
+      <div class="two-header">
+
+      </div>
       <div class="name-product">
         {{ product?.name }}
       </div>
@@ -16,14 +20,23 @@
     </div>
     <div class="price-phone">
       <div class="price-product">
-        <div class="number-price"> {{ product?.price }} </div> <div class="well">руб.</div>
+        <div class="number-price"> {{ product?.price }}</div>
+        <div class="well">руб.</div>
       </div>
     </div>
-    <div class="button-phone">
-      <button class="text-question"
-              style="color: rgba(255,255,255,0.5); text-decoration: none; border: white; font-size: 20px">
-        Подробнее
-      </button>
+    <div class="btn">
+      <div class="button-phone">
+        <button class="text-question-more"
+                style="color: white; text-decoration: none; border: white; font-size: 20px">
+          Подробнее
+        </button>
+      </div>
+      <div class="button-phone-buy">
+        <button class="text-question-buy"
+                style="color: white; text-decoration: none; border: white; font-size: 20px">
+          Купить
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -45,7 +58,7 @@ defineProps({
 
   &:hover {
     box-shadow: 0px 0px 4px 4px rgba($color: #9f9f9f, $alpha: 0.2);
-    cursor: pointer;
+    //cursor: pointer;
   }
 }
 
@@ -85,13 +98,13 @@ defineProps({
   margin-left: 10px;
 }
 
-.question{
+.question {
   display: flex;
   align-items: center;
   margin-left: 7%;
 }
 
-.price-phone{
+.price-phone {
   background: rgba(208, 184, 184, 0.5);
   width: 315px;
   height: 100px;
@@ -101,28 +114,71 @@ defineProps({
   align-items: center;
 }
 
-.price-product{
+.price-product {
   color: white;
   display: flex;
   margin-left: 5%;
 }
 
-.number-price{
+.number-price {
   font-size: 35px;
   font-weight: 500;
 }
 
-.well{
+.well {
   display: flex;
   align-items: center;
   margin-top: 15px;
   margin-left: 5px;
 }
 
-.button-phone{
+.button-phone {
   background: rgba(23, 23, 23, 0.01);
+  border: 1px solid rgba(252, 247, 247, 0.5);
   border-radius: 10px;
-  border: 1px  linear-gradient(50deg, rgba(23,23,23, 0.5),rgba(23,23,23,0.5));
+  text-align: center;
+  margin-left: 15px;
+  transition: background-color 0.5s ease;
+
+}
+
+.text-question-more {
+  background-color: transparent;
+  border: none;
+  color: #000;
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 5px 20px 10px 20px;
+}
+
+.button-phone-buy{
+  background: rgba(23, 23, 23, 0.01);
+  border: 1px solid rgba(252, 247, 247, 0.5);
+  border-radius: 10px;
+  text-align: center;
+  margin-left: 25px;
+  padding: 5px 40px 10px 40px;
+  transition: background-color 0.5s ease;
+}
+
+.text-question-buy{
+  background: none;
+  border: none;
+  color: #000;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.btn{
+  display: flex;
+}
+
+.button-phone-buy:hover{
+  background: rgba(62, 217, 217, 0.38);
+}
+
+.button-phone:hover{
+  background: rgba(62, 217, 217, 0.38);
 }
 
 </style>
