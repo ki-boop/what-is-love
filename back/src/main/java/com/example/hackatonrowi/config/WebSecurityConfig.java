@@ -31,14 +31,12 @@ class WebSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("**")
-                .hasRole("user")
-                .anyRequest()
-                .permitAll();
+                .anyRequest().permitAll();
         http.oauth2Login();
         http.oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt);
         return http.build();
     }
+
     @Bean
     public JwtAuthenticationConverter jwtAuthenticationConverter() {
         Converter<Jwt, Collection<GrantedAuthority>> jwtGrantedAuthoritiesConverter = jwt -> {
@@ -52,7 +50,7 @@ class WebSecurityConfig {
 
         var jwtAuthenticationConverter = new JwtAuthenticationConverter();
         jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(jwtGrantedAuthoritiesConverter);
-
+        jwtAuthenticationConverter.setPrincipalClaimName("preferred_username");
         return jwtAuthenticationConverter;
     }
 }

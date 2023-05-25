@@ -29,7 +29,8 @@ import { image } from "@/models/user.model";
 import DialogItem from "@/components/common/shared/DialogItem.vue";
 import InputText from "primevue/inputtext";
 import Button from "primevue/button";
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
+import { MessageService } from "@/api/messager.service";
 
 const mes = ref('');
 const messages = ref(['']);
@@ -39,6 +40,10 @@ function send() {
   messages.value.push(mes.value);
   mes.value = '';
 }
+
+onMounted(() => {
+  MessageService.initConnection();
+});
 
 const chatList: ShortDialog[] = [
   {

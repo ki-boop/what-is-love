@@ -7,25 +7,22 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "Manager")
+@Table(name = "Customer")
 @Getter
 @Setter
 @SuperBuilder
 @NoArgsConstructor
-@AllArgsConstructor
+//@AllArgsConstructor
 @ToString(callSuper = true)
-public class Manager extends User {
+public class Customer extends User {
 
-    @OneToMany(mappedBy = "manager",
+
+    @OneToMany(mappedBy = "customer",
             cascade = CascadeType.ALL,
             orphanRemoval = true)
     private List<Chat> chats;
 
-    @ManyToOne
-    @JoinColumn(name = "product_id")
-    private Product product;
-
-    public Manager(String firstName, String lastName, String username, String email) {
+    public Customer(String firstName, String lastName, String username, String email) {
         super(firstName, lastName, username, email);
     }
 }
