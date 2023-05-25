@@ -1,7 +1,7 @@
 #WHAT-IS-LOVE
 
 # backend
-### Запускаем [docker-compose](../docker-compose.yml):
+### Запускаем [docker-compose](docker-compose.yml):
  
 ```
 docker-compose up -d --build
@@ -24,7 +24,7 @@ npm install
 npm run serve
 ```
 ###Теперь заходим на localhost:8081
-###Для авторизации нужен логин, пароль и роль, все логины и пароли лежат в [realm-export.json](../keycloak/realm-export.json)
+###Для авторизации нужен логин, пароль и роль, все логины и пароли лежат в [realm-export.json](keycloak/realm-export.json)
 
 ###Вот пример одного из тестовых пользователей
 ```
