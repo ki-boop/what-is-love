@@ -1,15 +1,15 @@
-#WHAT-IS-LOVE
+# WHAT-IS-LOVE
 
-# backend
+## backend
 Для поднятия бэкенда, keycloak, postgresql:
  
 ```
 docker-compose up -d --build
 ```
 
-###Keycloak и postgresql [уже имеет тестовые данные](back/src/main/resources/db/migration)
+Keycloak и postgresql [уже имеет тестовые данные](back/src/main/resources/db/migration)
 
-# front
+## front
 
 Для запуска:
 ```
@@ -22,6 +22,7 @@ npm run serve
 Тестовые аккаунты уже импортированы в keycloak realm: [realm-export.json](keycloak/realm-export.json)
 
 usernames: customer_1, customer_2, manager_1, manager_2, manager_3, manager_4
+
 passwords: 123321
 
 Пример одного из тестовых пользователей:
