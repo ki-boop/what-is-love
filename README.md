@@ -1,12 +1,12 @@
 #WHAT-IS-LOVE
 
 # backend
-### Запускаем [docker-compose](docker-compose.yml):
+### Запускаем docker-compose:
  
 ```
 docker-compose up -d --build
 ```
-###Keycloak и база данных уже имеет тестовые данные
+###Keycloak и база данных [уже имеет тестовые данные] (back/src/main/resources/db/migration)
 
 # front
 
