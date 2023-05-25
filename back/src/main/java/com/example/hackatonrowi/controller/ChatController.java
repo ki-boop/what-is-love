@@ -10,28 +10,30 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.jwt.Jwt;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/chat")
+@CrossOrigin("*")
 public class ChatController {
     private final UserService userService;
     private final CustomerService customerService;
+    private final ManagerService managerService;
     private final SimpMessagingTemplate messagingTemplate;
     private final ChatMessageService chatMessageService;
     private final ChatService chatService;
-
     private final ProductService productService;
 
     public ChatController(UserService userService,
-                          CustomerService customerService, SimpMessagingTemplate messagingTemplate,
+                          CustomerService customerService, ManagerService managerService, SimpMessagingTemplate messagingTemplate,
                           ChatMessageService chatMessageService,
                           ChatService chatService, ProductService productService) {
         this.userService = userService;
         this.customerService = customerService;
+        this.managerService = managerService;
         this.messagingTemplate = messagingTemplate;
         this.chatMessageService = chatMessageService;
         this.chatService = chatService;
@@ -43,6 +45,12 @@ public class ChatController {
         Customer customer = customerService.getCustomerByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
         Product product = productService.getProductById(productId);
         return ChatDto.map(chatService.createChat(product, customer));
+    }
+
+    @GetMapping("/get-available-chats")
+    public List<ChatDto> getChats() {
+        Manager manager = managerService.getManagerByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+        return chatService.getAvailableChats(manager).stream().map(ChatDto::map).collect(Collectors.toList());
     }
 
     @MessageMapping("/chat")
