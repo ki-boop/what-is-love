@@ -20,7 +20,7 @@
     </div>
     <div class="price-phone">
       <div class="price-product">
-        <div class="number-price"> {{ product?.price }}</div>
+        <div class="number-price"> 1000 </div>
         <div class="well">руб.</div>
       </div>
     </div>
@@ -33,6 +33,7 @@
       </div>
       <div class="button-phone-buy">
         <button class="text-question-buy"
+                @click="startChat()"
                 style="color: white; text-decoration: none; border: white; font-size: 20px">
           Купить
         </button>
@@ -44,9 +45,15 @@
 import {ChatItemModel} from "@/models/chatItem.model";
 /* eslint-disable */
 
+function startChat() {
+  
+}
+
 defineProps({
   product: ChatItemModel,
 });
+
+
 </script>
 <style lang="scss" scoped>
 .product-wrapper {

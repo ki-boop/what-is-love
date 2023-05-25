@@ -16,8 +16,7 @@
         <MessageItem
           v-for="mes in messages"
           v-bind:key="mes.message"
-          :message="mes.message"
-          :self="mes.self"
+          :message="mes"
         />
       </div>
       <div class="input-wrapper">
@@ -41,15 +40,14 @@ import InputText from "primevue/inputtext";
 import { onMounted, ref } from "vue";
 import { MessageService } from "@/api/messager.service";
 import MessageItem from "@/components/common/shared/MessageItem.vue";
+import messageStore from "@/store/messageStore";
 
 const mes = ref("");
-const messages = ref([
-  { message: "adasdadasd", self: true },
-  { message: "adasdadasd", self: false },
-]);
+const messages = ref(messageStore.getters.getMessages)
 
 function send() {
   messages.value.push({ message: mes.value, self: true });
+  // MessageService.sendMessage(,mes)
   mes.value = "";
 }
 
