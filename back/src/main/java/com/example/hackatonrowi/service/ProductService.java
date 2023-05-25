@@ -5,6 +5,7 @@ import com.example.hackatonrowi.entity.Product;
 import com.example.hackatonrowi.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -17,5 +18,9 @@ public class ProductService {
 
     public Optional<Product> getProductById(Long id) {
         return productRepository.findById(id);
+    }
+
+    public List<Product> getAll() {
+        return productRepository.findAll();
     }
 }
