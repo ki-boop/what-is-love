@@ -28,6 +28,6 @@ public class ChatService {
     }
 
     public List<Chat> getAvailableChats(Manager manager) {
-        return chatRepository.findAllByProductAndManagerOnIsNull(manager.getProduct());
+        return null;// chatRepository.findAllByProductAndManagerIdOnIsNull(manager.getProduct());
     }
 }

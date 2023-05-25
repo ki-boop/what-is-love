@@ -1,5 +1,6 @@
 package com.example.hackatonrowi.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -43,6 +44,7 @@ public class User {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
+    @JsonIgnore
     List<ChatMessage> messages;
 
     @ManyToMany(fetch = FetchType.EAGER)
