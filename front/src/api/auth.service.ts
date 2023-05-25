@@ -42,9 +42,9 @@ export class AuthService {
 
         return response.data;
       })
-    .then(() => {
-      this.getUser();
-    });
+      .then(() => {
+        this.getUser();
+      });
   }
 
   static getUser() {
@@ -56,7 +56,7 @@ export class AuthService {
         },
       })
       .then((res) => {
-        console.log(res)
+        console.log(res);
         authStore.dispatch("setUser", res);
       });
   }

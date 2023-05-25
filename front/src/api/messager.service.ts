@@ -1,6 +1,7 @@
 import authStore from "@/store";
 import { Stomp } from "@stomp/stompjs";
 import SockJS from "sockjs-client";
+import axios from "axios";
 const WS_SOCKET_CONNECTION = "http://localhost:8000/ws";
 
 export class MessageService {
@@ -32,5 +33,9 @@ export class MessageService {
           );
         }
       );
+  }
+
+  static getAValibleChat() {
+    return axios.get("");
   }
 }
