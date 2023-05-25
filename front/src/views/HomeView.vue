@@ -8,25 +8,23 @@
     <div class="circle6"></div>
     <div class="circle7"></div>
     <div v-for="chat in chatsActivity" :key="chat.id">
-      <ChatListItem :product="chat" class="product"/>
+      <ChatListItem :product="chat" class="product" />
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { ChatItemModel } from "@/models/chatItem.model";
-import  ChatListItem  from "../components/common/shared/ChatListItem.vue";
+import ChatListItem from "../components/common/shared/ChatListItem.vue";
+import { onMounted, ref } from "vue";
+import { ProductService } from "@/api/product.service";
 
-const chatsActivity: ChatItemModel[] = [
-  { id: "1", name: "Товар 1", price: 3500, },
-  { id: "3", name: "Товар 2", price: 2700, },
-  { id: "2", name: "Товар 3", price: 3700, },
-];
-const chatsHistory = [
-  { id: "1", name: "chat 1" },
-  { id: "3", name: "chat 2" },
-  { id: "2", name: "chat 3" },
-];
+onMounted(() => {
+  ProductService.getProducts().then((res: any) => {
+    chatsActivity.value = res.data;
+  });
+});
+
+let chatsActivity = ref([]);
 </script>
 
 <style lang="scss" scoped>
@@ -40,7 +38,11 @@ const chatsHistory = [
 
 .circle1 {
   position: absolute;
-  background: radial-gradient(circle, rgba(237, 136, 228, 0.8), rgba(252, 124, 169, 0.8));
+  background: radial-gradient(
+    circle,
+    rgba(237, 136, 228, 0.8),
+    rgba(252, 124, 169, 0.8)
+  );
   border-radius: 50%;
   width: 300px;
   height: 300px;
@@ -128,7 +130,11 @@ const chatsHistory = [
   filter: blur(10px);
 }
 
-.product{
-  background: linear-gradient(150deg, rgb(85, 68, 159), rgba(250, 248, 248, 0.2));
+.product {
+  background: linear-gradient(
+    150deg,
+    rgb(85, 68, 159),
+    rgba(250, 248, 248, 0.2)
+  );
 }
 </style>

@@ -28,10 +28,11 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import("../views/SupportView.vue"),
   },
   {
-    path: "/chats",
+    path: "/chat/:id",
     name: "chats",
     component: () => import("../views/ChatView.vue"),
     beforeEnter: isAuthentivated,
+    children: [{ path: "", name: "chat", component: ChatView }],
   },
   {
     path: "/product",

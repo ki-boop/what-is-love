@@ -1,38 +1,68 @@
 package com.example.hackatonrowi.controller;
 
+import com.example.hackatonrowi.dto.ChatDto;
 import com.example.hackatonrowi.dto.SendMessageDto;
-import com.example.hackatonrowi.entity.Chat;
-import com.example.hackatonrowi.entity.ChatMessage;
-import com.example.hackatonrowi.entity.RoleName;
-import com.example.hackatonrowi.entity.User;
-import com.example.hackatonrowi.service.ChatMessageService;
-import com.example.hackatonrowi.service.ChatService;
-import com.example.hackatonrowi.service.UserService;
+import com.example.hackatonrowi.dto.StompEvent;
+import com.example.hackatonrowi.entity.*;
+import com.example.hackatonrowi.service.*;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.jwt.Jwt;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/chat")
+@CrossOrigin("*")
 public class ChatController {
     private final UserService userService;
+    private final CustomerService customerService;
+    private final ManagerService managerService;
     private final SimpMessagingTemplate messagingTemplate;
     private final ChatMessageService chatMessageService;
     private final ChatService chatService;
+    private final ProductService productService;
 
     public ChatController(UserService userService,
-                          SimpMessagingTemplate messagingTemplate,
+                          CustomerService customerService, ManagerService managerService, SimpMessagingTemplate messagingTemplate,
                           ChatMessageService chatMessageService,
-                          ChatService chatService) {
+                          ChatService chatService, ProductService productService) {
         this.userService = userService;
+        this.customerService = customerService;
+        this.managerService = managerService;
         this.messagingTemplate = messagingTemplate;
         this.chatMessageService = chatMessageService;
         this.chatService = chatService;
+        this.productService = productService;
+    }
+
+    @PostMapping("/create")
+    public ChatDto createChat(@RequestParam(required = false) Long productId) {
+        Customer customer = customerService.getCustomerByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+        Product product = productService.getProductById(productId).orElse(null);
+        return ChatDto.map(chatService.createChat(product, customer));
+    }
+
+    @GetMapping("/get-available-chats")
+    public List<ChatDto> getChats() {
+        Manager manager = managerService.getManagerByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+        return chatService.getAvailableChats(manager).stream().map(ChatDto::map).collect(Collectors.toList());
+    }
+
+    @PostMapping("/manager-enter")
+    public ChatDto enterChat(@RequestParam String chatId) {
+        Manager manager = managerService.getManagerByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+
+        ChatDto chat = ChatDto.map(chatService.setManager(chatId, manager));
+
+        messagingTemplate.convertAndSend("/queue/manager/events", StompEvent.builder().name("CHAT_ACCEPTED").payload(chat));
+
+        return chat;
     }
 
     @MessageMapping("/chat")
@@ -44,15 +74,11 @@ public class ChatController {
         messagingTemplate.convertAndSendToUser(authentication.getName(), "/queue/drivers", "Сообщение отправлено");
 
         User user = userService.getUserByUsername(authentication.getName());
-////
-        Chat chat = chatService.getChat(messageDto.getChatId());
-//
-        RoleName roleName = authentication.getAuthorities().contains("ROLE_CUSTOMER") ? RoleName.ROLE_CUSTOMER : RoleName.ROLE_MANAGER;
-//
-        ChatMessage chatMessage = chatMessageService.sendMessage(messageDto.getContent(), user, chat, roleName);
-//
-//        chatService.sendMessage(messageDto);
 
-        return;
+        Chat chat = chatService.getChat(messageDto.getChatId());
+
+        RoleName roleName = authentication.getAuthorities().contains("ROLE_CUSTOMER") ? RoleName.ROLE_CUSTOMER : RoleName.ROLE_MANAGER;
+
+        ChatMessage chatMessage = chatMessageService.sendMessage(messageDto.getContent(), user, chat, roleName);
     }
 }

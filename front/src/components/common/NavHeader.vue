@@ -34,17 +34,14 @@ function click() {
   router.push("auth");
 }
 
-
 function toogleSlideM() {
-  if(collapsed.value) return;
+  if (collapsed.value) return;
   collapsed.value = !collapsed.value;
 }
 
 function toggleSlideMenu() {
   collapsed.value = false;
 }
-
-
 </script>
 
 <style lang="scss" scoped>

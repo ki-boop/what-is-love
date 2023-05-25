@@ -16,15 +16,14 @@
         <MessageItem
           v-for="mes in messages"
           v-bind:key="mes.message"
-          :message="mes.message"
-          :self="mes.self"
+          :message="mes"
         />
       </div>
       <div class="input-wrapper">
         <InputText
           v-model="mes"
           v-on:keyup.enter="send()"
-          :placeholder="'Написать сообщение'"
+          :placeholder="'Написать сообщение..'"
           :pt="{
             root: { class: 'send-input' },
           }"
@@ -41,12 +40,16 @@ import InputText from "primevue/inputtext";
 import { onMounted, ref } from "vue";
 import { MessageService } from "@/api/messager.service";
 import MessageItem from "@/components/common/shared/MessageItem.vue";
+import messageStore from "@/store/messageStore";
+import { useRoute } from "vue-router";
 
 const mes = ref("");
-const messages = ref([{message: 'adasdadasd', self: true}, { message: 'adasdadasd', self: false }]);
-
+const messages = ref(messageStore.getters.getMessages);
+const route = useRoute();
 function send() {
-  messages.value.push({message: mes.value, self: true});
+  messages.value.push({ message: mes.value, self: true });
+  
+  MessageService.sendMessage(route.params.id as string, mes.value);
   mes.value = "";
 }
 
@@ -282,6 +285,7 @@ const chatList: ShortDialog[] = [
   display: flex;
   width: 100%;
   height: 100%;
+  color: #fff;
 
   .chat-list {
     width: 40%;
@@ -297,7 +301,7 @@ const chatList: ShortDialog[] = [
     }
 
     &::-webkit-scrollbar-thumb {
-      background: transparent;
+      background: #fff;
       border-radius: 10px;
     }
   }
@@ -339,13 +343,31 @@ const chatList: ShortDialog[] = [
       padding: 0 20px;
       padding-top: 20px;
       overflow-x: hidden;
+
+      &::-webkit-scrollbar {
+        width: 3px;
+        height: 3px;
+      }
+
+      &::-webkit-scrollbar-track {
+        background: transparent;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background: #fff;
+        border-radius: 10px;
+      }
     }
   }
 }
 
 .circle1 {
   position: absolute;
-  background: radial-gradient(circle, rgba(237, 136, 228, 0.8), rgba(252, 124, 169, 0.8));
+  background: radial-gradient(
+    circle,
+    rgba(237, 136, 228, 0.8),
+    rgba(252, 124, 169, 0.8)
+  );
   border-radius: 50%;
   width: 300px;
   height: 300px;

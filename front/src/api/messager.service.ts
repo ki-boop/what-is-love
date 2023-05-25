@@ -1,8 +1,10 @@
 import authStore from "@/store";
 import { Stomp } from "@stomp/stompjs";
 import SockJS from "sockjs-client";
+import axios from "axios";
+import messageStore from "@/store/messageStore";
 const WS_SOCKET_CONNECTION = "http://localhost:8000/ws";
-
+/* eslint-disable */
 export class MessageService {
   static initConnection() {
     const ws = new SockJS(WS_SOCKET_CONNECTION);
@@ -12,17 +14,52 @@ export class MessageService {
 
     if (client)
       client.connect(
-        { "X-Authorization": "Bearer " + authStore.getters.getToken },
+        {
+          "X-Authorization": "Bearer " + JSON.parse(authStore.getters.getToken),
+        },
         () => {
           client.subscribe("/user/queue/drivers", (mes: any) => {
-            console.log(mes);
+            console.log(mes.body);
+
+            messageStore.dispatch("pushToStore", mes.body);
           });
-//           client.subscribe("/queue/drivers", (mes: any) => {
-//                       console.log(mes);
-//                     });
-          client.send("/app/chat", {}, JSON.stringify({ chatId: "b63da074-af73-4836-90c8-aa8b4d6a983d", content: "message"}))
         }
       );
+  }
 
+  static getAvalibleChat(productId: number) {
+    return axios.post(
+      `http://localhost:8000/api/chat/create?productId=${productId}`,
+      {},
+      {
+        headers: {
+          Authorization: "Bearer " + JSON.parse(authStore.getters.getToken),
+        },
+      }
+    );
+  }
+
+  static sendMessage(chatId: string, msg: string) {
+    const ws = new SockJS(WS_SOCKET_CONNECTION);
+    const client = Stomp.over(ws);
+
+    if (client) {
+      client.connect(
+        {
+          "X-Authorization": "Bearer " + JSON.parse(authStore.getters.getToken),
+        },
+        () => {}
+      );
+      client.send(
+        "/app/chat",
+        {
+          "X-Authorization": "Bearer " + JSON.parse(authStore.getters.getToken),
+        },
+        JSON.stringify({
+          chatId: chatId,
+          content: msg,
+        })
+      );
+    }
   }
 }
