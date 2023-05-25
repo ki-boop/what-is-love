@@ -5,6 +5,7 @@ import com.example.hackatonrowi.entity.*;
 import com.example.hackatonrowi.repository.ChatRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -24,5 +25,9 @@ public class ChatService {
                 .customer(customer)
                 .product(product)
                 .build());
+    }
+
+    public List<Chat> getAvailableChats(Manager manager) {
+        return chatRepository.findAllByProductAndManagerOnIsNull(manager.getProduct());
     }
 }
