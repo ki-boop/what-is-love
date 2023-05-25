@@ -41,10 +41,10 @@ export class AuthService {
         authStore.dispatch("setToken", response.data.access_token);
 
         return response.data;
-      })
-      .then(() => {
-        this.getUser();
       });
+    // .then(() => {
+    //   this.getUser();
+    // });
   }
 
   static getUser() {
