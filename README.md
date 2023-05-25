@@ -1,32 +1,30 @@
 #WHAT-IS-LOVE
 
 # backend
-### Запускаем docker-compose:
+Для поднятия бэкенда, keycloak, postgresql:
  
 ```
 docker-compose up -d --build
 ```
-###Keycloak и база данных [уже имеет тестовые данные](back/src/main/resources/db/migration)
+
+###Keycloak и postgresql [уже имеет тестовые данные](back/src/main/resources/db/migration)
 
 # front
 
-### Переходим в директорию front
+Для запуска:
 ```
 cd front
-```
-###После, скачиваем зависимости:
-```
 npm install
-```
-
-### Далее запускаем фронт часть проекта:
-```
 npm run serve
 ```
-###Теперь заходим на localhost:8081
-###Для авторизации нужен логин, пароль и роль, все логины и пароли лежат в [realm-export.json](keycloak/realm-export.json)
+Доступен на localhost:8081
 
-###Вот пример одного из тестовых пользователей
+Тестовые аккаунты уже импортированы в keycloak realm: [realm-export.json](keycloak/realm-export.json)
+
+usernames: customer_1, customer_2, manager_1, manager_2, manager_3, manager_4
+passwords: 123321
+
+Пример одного из тестовых пользователей:
 ```
     {
       "username": "manager_2",
