@@ -1,8 +1,8 @@
 package com.example.hackatonrowi.service;
 
-import com.example.hackatonrowi.dto.SendMessageDto;
 import com.example.hackatonrowi.entity.*;
 import com.example.hackatonrowi.repository.ChatRepository;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,8 +12,11 @@ import java.util.UUID;
 public class ChatService {
     private final ChatRepository chatRepository;
 
-    public ChatService(ChatRepository chatRepository) {
+    private final SimpMessagingTemplate messagingTemplate;
+
+    public ChatService(ChatRepository chatRepository, SimpMessagingTemplate messagingTemplate) {
         this.chatRepository = chatRepository;
+        this.messagingTemplate = messagingTemplate;
     }
 
     public Chat getChat(String chatId) {
@@ -29,5 +32,11 @@ public class ChatService {
 
     public List<Chat> getAvailableChats(Manager manager) {
         return chatRepository.findAllByProductAndManagerIdIsNull(manager.getProduct());
+    }
+
+    public Chat setManager(String chatId, Manager manager) {
+        Chat chat = getChat(chatId);
+        chat.setManager(manager);
+        return chatRepository.save(chat);
     }
 }
