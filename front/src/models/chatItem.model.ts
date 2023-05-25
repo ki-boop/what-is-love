@@ -1,5 +1,5 @@
 export class ChatItemModel {
-  id: string;
+  id: number;
   name: string;
 
   constructor(source: any) {

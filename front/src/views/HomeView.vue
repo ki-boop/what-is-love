@@ -14,23 +14,17 @@
 </template>
 
 <script lang="ts" setup>
-import { ChatItemModel } from "@/models/chatItem.model";
 import ChatListItem from "../components/common/shared/ChatListItem.vue";
-import { onMounted } from "vue";
+import { onMounted, ref } from "vue";
 import { ProductService } from "@/api/product.service";
 
 onMounted(() => {
   ProductService.getProducts().then((res: any) => {
-    chatsActivity = [...res];
+    chatsActivity.value = res.data;
   });
 });
 
-let chatsActivity: ChatItemModel[] = [];
-const chatsHistory = [
-  { id: "1", name: "chat 1" },
-  { id: "3", name: "chat 2" },
-  { id: "2", name: "chat 3" },
-];
+let chatsActivity = ref([]);
 </script>
 
 <style lang="scss" scoped>

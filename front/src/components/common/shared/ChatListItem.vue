@@ -42,16 +42,22 @@
   </div>
 </template>
 <script lang="ts" setup>
+import { MessageService } from "@/api/messager.service";
 import {ChatItemModel} from "@/models/chatItem.model";
+import router from "@/router";
 /* eslint-disable */
-
-function startChat() {
-  
-}
-
-defineProps({
+const props = defineProps({
   product: ChatItemModel,
 });
+
+function startChat() {
+  if(props.product)
+  MessageService.getAvalibleChat(props.product.id).then((res) => {
+    router.push(`chat/${res.data.id}`)
+  })
+}
+
+
 
 
 </script>

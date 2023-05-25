@@ -41,13 +41,15 @@ import { onMounted, ref } from "vue";
 import { MessageService } from "@/api/messager.service";
 import MessageItem from "@/components/common/shared/MessageItem.vue";
 import messageStore from "@/store/messageStore";
+import { useRoute } from "vue-router";
 
 const mes = ref("");
-const messages = ref(messageStore.getters.getMessages)
-
+const messages = ref(messageStore.getters.getMessages);
+const route = useRoute();
 function send() {
   messages.value.push({ message: mes.value, self: true });
-  // MessageService.sendMessage(,mes)
+  
+  MessageService.sendMessage(route.params.id as string, mes.value);
   mes.value = "";
 }
 
@@ -342,21 +344,19 @@ const chatList: ShortDialog[] = [
       padding-top: 20px;
       overflow-x: hidden;
 
+      &::-webkit-scrollbar {
+        width: 3px;
+        height: 3px;
+      }
 
-    &::-webkit-scrollbar {
-      width: 3px;
-      height: 3px;
-    }
+      &::-webkit-scrollbar-track {
+        background: transparent;
+      }
 
-    &::-webkit-scrollbar-track {
-      background: transparent;
-    }
-
-    &::-webkit-scrollbar-thumb {
-      background: #fff;
-      border-radius: 10px;
-    }
-  
+      &::-webkit-scrollbar-thumb {
+        background: #fff;
+        border-radius: 10px;
+      }
     }
   }
 }

@@ -28,9 +28,15 @@ export class MessageService {
   }
 
   static getAvalibleChat(productId: number) {
-    return axios
-      .post(`http://localhost:8000/api/chat/create?productId:${productId}`)
-      .then((res) => {});
+    return axios.post(
+      `http://localhost:8000/api/chat/create?productId=${productId}`,
+      {},
+      {
+        headers: {
+          Authorization: "Bearer " + JSON.parse(authStore.getters.getToken),
+        },
+      }
+    );
   }
 
   static sendMessage(chatId: string, msg: string) {
@@ -38,9 +44,17 @@ export class MessageService {
     const client = Stomp.over(ws);
 
     if (client) {
+      client.connect(
+        {
+          "X-Authorization": "Bearer " + JSON.parse(authStore.getters.getToken),
+        },
+        () => {}
+      );
       client.send(
         "/app/chat",
-        {},
+        {
+          "X-Authorization": "Bearer " + JSON.parse(authStore.getters.getToken),
+        },
         JSON.stringify({
           chatId: chatId,
           content: msg,
