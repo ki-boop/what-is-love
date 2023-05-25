@@ -2,7 +2,7 @@ import authStore from "@/store";
 import { showCustomNotification } from "@/utils/notification";
 import axios from "axios";
 const API_TOKEN_URL =
-  "http://localhost:8282/realms/chat_realm/protocol/openid-connect/token";
+  "http://localhost:8080/realms/chat_realm/protocol/openid-connect/token";
 const API_URL = "http://localhost:8080/api/auth/";
 /* eslint-disable */
 // @ts-ignore
@@ -57,7 +57,6 @@ export class AuthService {
       })
       .then((res) => {
         console.log(res);
-
         authStore.dispatch("setUser", res);
       });
   }

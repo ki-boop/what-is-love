@@ -2,6 +2,7 @@ package com.example.hackatonrowi.controller;
 
 import com.example.hackatonrowi.dto.ChatDto;
 import com.example.hackatonrowi.dto.SendMessageDto;
+import com.example.hackatonrowi.dto.StompEvent;
 import com.example.hackatonrowi.entity.*;
 import com.example.hackatonrowi.service.*;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -51,6 +52,17 @@ public class ChatController {
     public List<ChatDto> getChats() {
         Manager manager = managerService.getManagerByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
         return chatService.getAvailableChats(manager).stream().map(ChatDto::map).collect(Collectors.toList());
+    }
+
+    @PostMapping("/manager-enter")
+    public ChatDto enterChat(@RequestParam String chatId) {
+        Manager manager = managerService.getManagerByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+
+        ChatDto chat = ChatDto.map(chatService.setManager(chatId, manager));
+
+        messagingTemplate.convertAndSend("/queue/manager/events", StompEvent.builder().name("CHAT_ACCEPTED").payload(chat));
+
+        return chat;
     }
 
     @MessageMapping("/chat")
