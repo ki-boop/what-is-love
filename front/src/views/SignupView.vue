@@ -85,6 +85,8 @@ function auth() {
 }
 </script>
 <style scoped lang="scss">
+
+
 .form-wrapper {
   width: 400px;
   display: flex;

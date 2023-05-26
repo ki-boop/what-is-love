@@ -1,5 +1,5 @@
 html[data-theme="light"] {
-    transition: background 600ms ease;
+    overflow-x: hidden;
     --login-background: rgb(0, 0, 0);
     --login-box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
     --login-input-text-color: #fff;
@@ -46,7 +46,7 @@ html[data-theme="light"] {
 }
 
 html[data-theme="dark"] {
-    background: #000;
+    overflow-x: hidden;
     transition: background 400ms ease;
     --login-background: rgb(255, 170, 32);
     --login-box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);

@@ -17,6 +17,7 @@
           v-for="mes in messages"
           v-bind:key="mes.message"
           :message="mes"
+          :self="mes.self"
         />
       </div>
       <div class="input-wrapper">
@@ -42,19 +43,27 @@ import { MessageService } from "@/api/messager.service";
 import MessageItem from "@/components/common/shared/MessageItem.vue";
 import messageStore from "@/store/messageStore";
 import { useRoute } from "vue-router";
+import authStore from "@/store";
 
 const mes = ref("");
 const messages = ref(messageStore.getters.getMessages);
 const route = useRoute();
+
+const useMessage = new MessageService();
 function send() {
-  messages.value.push({ message: mes.value, self: true });
-  
-  MessageService.sendMessage(route.params.id as string, mes.value);
+  const chat_id = route.params.id as string;
+  messages.value.push({
+    content: mes.value,
+    sender_id: authStore.getters.getToken,
+    chat_id: chat_id,
+  });
+
+  useMessage.sendMessage(chat_id, mes.value);
   mes.value = "";
 }
 
 onMounted(() => {
-  MessageService.initConnection();
+  useMessage.initConnection();
 });
 
 const chatList: ShortDialog[] = [
@@ -286,6 +295,7 @@ const chatList: ShortDialog[] = [
   width: 100%;
   height: 100%;
   color: #fff;
+  margin-top: 30px;
 
   .chat-list {
     width: 40%;

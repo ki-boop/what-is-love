@@ -6,19 +6,17 @@ import messageStore from "@/store/messageStore";
 const WS_SOCKET_CONNECTION = "http://localhost:8000/ws";
 /* eslint-disable */
 export class MessageService {
-  static initConnection() {
-    const ws = new SockJS(WS_SOCKET_CONNECTION);
-    const client = Stomp.over(ws);
-    console.log(client);
-    console.log(authStore.getters.getToken);
+  static ws = new SockJS(WS_SOCKET_CONNECTION);
+  static client = Stomp.over(this.ws);
 
-    if (client)
-      client.connect(
+  initConnection() {
+    if (MessageService.client)
+      MessageService.client.connect(
         {
           "X-Authorization": "Bearer " + JSON.parse(authStore.getters.getToken),
         },
         () => {
-          client.subscribe("/user/queue/drivers", (mes: any) => {
+          MessageService.client.subscribe("/user/queue/drivers", (mes: any) => {
             console.log(mes.body);
 
             messageStore.dispatch("pushToStore", mes.body);
@@ -27,7 +25,7 @@ export class MessageService {
       );
   }
 
-  static getAvalibleChat(productId: number) {
+  getAvalibleChat(productId: number) {
     return axios.post(
       `http://localhost:8000/api/chat/create?productId=${productId}`,
       {},
@@ -39,18 +37,9 @@ export class MessageService {
     );
   }
 
-  static sendMessage(chatId: string, msg: string) {
-    const ws = new SockJS(WS_SOCKET_CONNECTION);
-    const client = Stomp.over(ws);
-
-    if (client) {
-      client.connect(
-        {
-          "X-Authorization": "Bearer " + JSON.parse(authStore.getters.getToken),
-        },
-        () => {}
-      );
-      client.send(
+  sendMessage(chatId: string, msg: string) {
+    if (MessageService.client) {
+      MessageService.client.send(
         "/app/chat",
         {
           "X-Authorization": "Bearer " + JSON.parse(authStore.getters.getToken),

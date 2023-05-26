@@ -20,7 +20,6 @@ import { useTheme } from "./utils/useTheme";
 
 onMounted(() => {
   useTheme();
-
   authStore.dispatch("setToken");
 });
 </script>
@@ -57,6 +56,7 @@ body {
 a {
   text-decoration: none;
 }
+
 .flex-wrapper {
   width: 100%;
   align-items: center;

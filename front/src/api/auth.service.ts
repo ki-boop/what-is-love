@@ -55,6 +55,7 @@ export class AuthService {
           Authorization: "Bearer " + JSON.parse(token),
         },
       })
+      .catch(() => new Error(""))
       .then((res) => {
         console.log(res);
         authStore.dispatch("setUser", res);
